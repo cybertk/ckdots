@@ -10,16 +10,22 @@ then
         sync $f $2/$bn
     done
 else
-    if diff $1 $2  2>&1 >/dev/null;
+    if [ -n "$verbose" ];
     then
-        echo "[$1] Latest" >/dev/null
+        diff -Nur $2 $1
     else
-        echo "Syncing $2"
-        /bin/cp $1 $2
+        if diff $1 $2  2>&1 >/dev/null;
+        then
+            echo "[$1] Latest" >/dev/null
+        else
+            echo "Syncing $2"
+            [ -n "$dryrun" ] || /bin/cp $1 $2
+        fi
     fi
 fi
 }
 
+function env_check() {
 cp=/bin/cp
 
 if [ ! -f $cp ];
@@ -27,6 +33,19 @@ then
     echo "cannot find $cp"
     exit
 fi
+}
+
+# [ $opt = ${opt#-v} ] || echo "option -v exist"
+case $1 in
+    "-v")
+    verbose=1
+    ;;
+    "-p")
+    dryrun=1
+    ;;
+esac
+
+env_check
 
 sync vimrc ~/.vimrc
 sync vim ~/.vim
