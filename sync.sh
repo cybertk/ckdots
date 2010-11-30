@@ -1,5 +1,5 @@
-# @param $1, src
-# @param $2, dst
+# @param $1, src, files in current repo
+# @param $2, dst, files in real dir
 function sync() {
 
 if [ -d $1 ];
@@ -12,9 +12,14 @@ then
 else
     if [ -n "$verbose" ];
     then
-        diff -Nur $2 $1
+        if [ -f "$2" ];
+        then
+            diff -Nur $2 $1
+        else
+            diff -Nur /dev/null $1
+        fi
     else
-        if diff $1 $2  2>&1 >/dev/null;
+        if diff $1 $2  2>&1 1>&/dev/null;
         then
             echo "[$1] Latest" >/dev/null
         else
