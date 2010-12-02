@@ -4,11 +4,15 @@ function sync() {
 
 if [ -d $1 ];
 then
-    for f in $1/*;
-    do
-        bn=$(basename $f)
-        sync $f $2/$bn
-    done
+    if [ -e $2 ];
+    then
+        for f in $(/bin/ls $1);
+        do
+            sync $1/$f $2/$f
+        done
+    else
+        mkdir $2
+    fi
 else
     if [ -n "$verbose" ];
     then
