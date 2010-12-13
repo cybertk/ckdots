@@ -55,8 +55,8 @@ case $1 in
 esac
 
 env_check
-
 sync vimrc ~/.vimrc
 sync vim ~/.vim
 sync bash_profile ~/.bash_profile
 sync bash_profile.d ~/.bash_profile.d
+sync xinitrc ~/.xinitrc
