@@ -14,6 +14,7 @@ alias chmod='chmod -v'
 alias pgrep='pgrep -l'
 alias rsync='rsync --progress'
 alias wget='wget --read-timeout=30'
+alias vi='vim'
 
 alias a='cscope'
 alias b='cscope -Rb'
