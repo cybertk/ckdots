@@ -181,8 +181,7 @@
     noremap <C-v> :r! xclip -o <CR>
     map <C-j> <C-]>
     map <C-k> <C-t>
-    map :date :r! date <CR>
-    inoremap <C-d> Copyright 2010 Kyan He <cra4fizx@gmail.com>
+    inoremap <C-d> <ESC>:r!date<CR>iKyan He <kyan.ql.he@gmail.com> @ <ESC>kJA<CR>
 
 
     " space / shift-space scroll in normal mode
