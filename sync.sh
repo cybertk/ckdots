@@ -59,4 +59,5 @@ sync vimrc ~/.vimrc
 sync vim ~/.vim
 sync bash_profile ~/.bash_profile
 sync bash_profile.d ~/.bash_profile.d
+sync bash_logout ~/.bash_logout
 sync xinitrc ~/.xinitrc
