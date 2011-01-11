@@ -12,28 +12,27 @@ function c() {
         cd $*
     else
 
-        if [ "$1" -eq "$1" ];
-        then
-            pushd +$D; dirs -v
-            return
-        fi
-
+        local a=""
         local D=${1:-~}
-        local i=$(dirs -v | awk "{ if (\$2==\"$D\") print \$1 }")
 
-        local ARG=""
-        if [ x"$i" = x ];
+        echo "$D"
+        if [[ "$D" =~ ^[0-9]+$ ]];
         then
-            ARG=$D
+            a="+$D"
         else
-            ARG=+$i
+            D=${{D/$HOME/"~"}%/}
+            local i=$(dirs -v | awk "{ if (\$2==\"$D\") print \$1 }")
+            
+            echo i is $i
+            if [ x"$i" = x ];
+            then
+                a="$D"
+            else
+                a="+$i"
+            fi
         fi
 
-        echo "pushd $ARG; dirs -v"
-        pushd $ARG; dirs -v
-
+        echo "pushd $a; dirs -v"
+        #pushd "$a" >/dev/null; dirs -v
     fi
 }
-
-c $*
-
