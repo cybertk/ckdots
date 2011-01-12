@@ -1,6 +1,6 @@
 #!/bin/sh
 # alias.sh
-# used to defining alias
+# used to define alias
 # created by seraph  2009/04/15
 
 alias ls='ls --color=always -h'
@@ -18,7 +18,7 @@ alias vi='vim'
 
 alias a='cscope'
 alias b='cscope -Rb'
-alias c='cp'
+# c is maped to cd.func.sh
 alias d='less'
 alias e='a'
 alias f='a'
