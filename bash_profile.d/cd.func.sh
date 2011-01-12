@@ -15,24 +15,26 @@ function c() {
         local a=""
         local D=${1:-~}
 
-        echo "$D"
         if [[ "$D" =~ ^[0-9]+$ ]];
         then
-            a="+$D"
+            pushd +$D >/dev/null || return
         else
-            D=${{D/$HOME/"~"}%/}
-            local i=$(dirs -v | awk "{ if (\$2==\"$D\") print \$1 }")
-            
-            echo i is $i
-            if [ x"$i" = x ];
-            then
-                a="$D"
-            else
-                a="+$i"
-            fi
+
+            # change relative path to absolute
+            pushd $D >/dev/null || return
+            D=$PWD
+
+            local i=$(dirs -v -l | awk "{ if (\$2==\"$D\") print \$1 }")
+            local n=0
+            for s in $i;
+            do
+                [ $s -eq 0 ] && continue
+                popd -n +$((s-$n)) >/dev/null
+                let n=n+1
+            done
         fi
 
-        echo "pushd $a; dirs -v"
-        #pushd "$a" >/dev/null; dirs -v
+        dirs -v | awk ' { printf "\033[1;34m<%s>  \033[1;33m%s\n", $1, $2 }'
+        echo -en "\033[0m"
     fi
 }
