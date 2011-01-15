@@ -21,7 +21,7 @@ alias b='cscope -Rb'
 # c is maped to cd.func.sh
 alias d='less'
 alias e='a'
-alias f='a'
+alias f='/usr/bin/find -regex'
 alias g='a'
 alias h='a'
 alias i='a'
