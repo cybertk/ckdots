@@ -103,7 +103,7 @@
 " }
 
 " Text Formatting/Layout {
-    set completeopt=menuone " don't use a pop up menu for completions
+    set completeopt=menuone,longest " don't use a pop up menu for completions
     set expandtab " no real tabs please!
     set formatoptions=rq " Automatically insert comment leader on return,
                           " and let gq format comments
