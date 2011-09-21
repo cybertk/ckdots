@@ -1,0 +1,71 @@
+#!/bin/sh
+#
+#  -- https://android-autotool.googlecode.com/svn/trunk/adb_reset --
+#
+#  restart ADB daemon to fix permission issues
+#
+#  when invoke adb devices,  get the output like
+#  $ adb devices
+#  List of devices attached
+#  ????????????    no permissions
+#
+#  Copyright 2011, Kyan He <kyan.ql.he@gmail.com>
+#
+#
+#  This program is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+adb=`which adb`
+pgrep=`which pgrep`
+pkill=`which pkill`
+
+# basic runtime checking
+if [ x"$adb" = x ];
+then
+    echo "adb not found"
+    exit 1
+fi
+
+if [ x"$pgrep" = x ];
+then
+    echo "pgrep not found"
+    exit 1
+fi
+
+if [ x"$pkill" = x ];
+then
+    echo "pkill not found"
+    exit 1
+fi
+
+# kill current adb process
+sudo $pkill "^adb$"
+echo -n "Reseting..."
+
+# wait adb be killed
+while $pgrep "^adb$" >/dev/null 2>&1;
+do
+    echo -n "."
+    sleep 1
+done
+
+# print "\n"
+echo ""
+
+sudo $adb devices | tail -n+3
+
+# garbage collect
+unset adb
+unset pkill
+unset pgrep
