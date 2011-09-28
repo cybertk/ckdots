@@ -19,7 +19,7 @@ if which dircolors >/dev/null ; then
         [ -f ~/.dir_colors ] && eval $(dircolors -b ~/.dir_colors)
 fi
 
-PS1="\[\033[0;1;32m\][\j] [$(date +%R:%S)@\h] [$(basename `tty`)] \[\033[0;32m\]\w\n\$ "
+PS1="\[\033[0;1;32m\][\j] [$(date +%R:%S)\[\033[0;32m\]@\h\[\033[0;1;32m\]] [$(basename `tty`)] \[\033[0;32m\]\w\n\$ "
 
 export EDITOR=vim
 
