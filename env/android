@@ -1,0 +1,10 @@
+
+ANDROID_SDK=~/opt/android-sdk
+ANDROID_NDK=~/opt/android-ndk
+
+# Clear the path first
+PATH=${PATH/$ANDROID_SDK:/}
+PATH=${PATH/$ANDROID_NDK:/}
+
+# Setup new path
+export PATH=$ANDROID_SDK:$ANDROID_NDK:$PATH

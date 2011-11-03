@@ -75,3 +75,6 @@ sync xinitrc ~/.xinitrc
 
 #sync git
 sync gitconfig ~/.gitconfig
+
+#sync env
+sync env ~/env
