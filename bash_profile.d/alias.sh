@@ -4,7 +4,12 @@
 # created by seraph  2009/04/15
 
 alias ls='ls --color=always -h'
-alias cp='rsync --progress'
+if rsync 2 >&1 1>&/dev/null;
+then
+    alias cp='rsync --progress'
+else
+    echo "no rsync found"
+fi
 alias cpp='cp'
 alias mv='mv -iv'
 alias rm='rm -iv'
