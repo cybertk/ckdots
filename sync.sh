@@ -11,7 +11,7 @@ then
             sync $1/$f $2/$f
         done
     else
-        mkdir $2
+    	[ -n "$dryrun" ] || mkdir $2
     fi
 else
     if [ -n "$verbose" ];
