@@ -7,7 +7,8 @@ then
     # Create directory if un-exist.
     if [ ! -e $2 ];
     then
-    	[ -n "$dryrun" ] || mkdir $2
+        echo "Syncing $2"
+        [ -n "$dryrun" ] || mkdir $2
     fi
 
     for f in $(/bin/ls $1);
