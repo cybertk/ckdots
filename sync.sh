@@ -60,10 +60,18 @@ case $1 in
 esac
 
 env_check
+#sync vim
 sync vimrc ~/.vimrc
 sync vim ~/.vim
+
+#sync bash
 sync bashrc ~/.bashrc
 sync bash_profile ~/.bash_profile
 sync bash_profile.d ~/.bash_profile.d
 sync bash_logout ~/.bash_logout
+
+#sync xinit
 sync xinitrc ~/.xinitrc
+
+#sync git
+sync gitconfig ~/.gitconfig
