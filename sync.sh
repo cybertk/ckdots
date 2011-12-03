@@ -4,15 +4,16 @@ function sync() {
 
 if [ -d $1 ];
 then
-    if [ -e $2 ];
+    # Create directory if un-exist.
+    if [ ! -e $2 ];
     then
-        for f in $(/bin/ls $1);
-        do
-            sync $1/$f $2/$f
-        done
-    else
     	[ -n "$dryrun" ] || mkdir $2
     fi
+
+    for f in $(/bin/ls $1);
+    do
+        sync $1/$f $2/$f
+    done
 else
     if [ -n "$verbose" ];
     then
