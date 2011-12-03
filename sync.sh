@@ -16,6 +16,9 @@ then
         sync $1/$f $2/$f
     done
 else
+    # Won't sync .gitignore
+    if [ `basename $1` == ".gitignore" ];then return; fi;
+
     if [ -n "$verbose" ];
     then
         if [ -f "$2" ];
