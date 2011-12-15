@@ -25,4 +25,4 @@ PS1="\[\033[0;1;32m\][\j] [$(date +%R:%S)\[\033[0;32m\]@\h\[\033[0;1;32m\]] [$(b
 export EDITOR=vim
 
 # invoke plugins
-for sh in ~/.bash_profile.d/*.sh; do . $sh; done
+for sh in ~/.bash_profile.d/*.sh; do . "$sh"; done
