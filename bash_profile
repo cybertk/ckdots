@@ -11,8 +11,9 @@ export LANG="en_US.UTF8"
 
 export TZ='Asia/Shanghai'
 
-# invoke app I customized first
-export PATH=~/bin:$PATH
+# Setup PATH, invoke app I customized first
+# Reset PATH first.
+export PATH=~/bin:${PATH/`echo ~/bin`:/}
 
 # set colorful PS1 and enable color for ls etc.
 if which dircolors >/dev/null ; then
