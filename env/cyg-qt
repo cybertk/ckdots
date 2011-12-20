@@ -1,0 +1,14 @@
+# Copyright 2011 (C) Kyan He <kyan.ql.he@gmail.com>
+#
+# @date Thu, Dec 15, 2011  1:37:35 PM
+# @brief Setup qt development for MS Win.
+
+# Setup QTDIR.
+export QTDIR=/cygdrive/e/kyan/apps/QtSDK/Desktop/Qt/4.7.4/mingw
+
+QT_MINGW_TOOLCHAIN=/cygdrive/e/kyan/apps/QtSDK/mingw/bin
+
+# Clear the path first, Setup new path.
+export PATH=$QT_MINGW_TOOLCHAIN:${PATH/$QT_MINGW_TOOLCHAIN:/}
+
+alias make=mingw32-make
