@@ -24,5 +24,10 @@ PS1="\[\033[0;1;32m\][\j] [$(date +%R:%S)\[\033[0;32m\]@\h\[\033[0;1;32m\]] [$(b
 
 export EDITOR=vim
 
+# Setup IME
+export GTK_IM_MODULE=ibus
+export XMODIFIERS=@im=ibus
+export QT_IM_MODULE=ibus
+
 # invoke plugins
 for sh in ~/.bash_profile.d/*.sh; do . "$sh"; done
