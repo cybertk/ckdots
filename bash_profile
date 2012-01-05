@@ -15,6 +15,9 @@ export TZ='Asia/Shanghai'
 # Reset PATH first.
 export PATH=~/bin:${PATH/`echo ~/bin`:/}
 
+# Setup customized lib path
+export LD_LIBRARY_PATH=~/lib
+
 # set colorful PS1 and enable color for ls etc.
 if which dircolors >/dev/null ; then
         [ -f ~/.dir_colors ] && eval $(dircolors -b ~/.dir_colors)
