@@ -79,3 +79,6 @@ sync gitconfig ~/.gitconfig
 
 #sync env
 sync env ~/env
+
+#sync bin
+sync bin ~/bin
