@@ -84,12 +84,15 @@ done
 # Copy app itself.
 $CP $EXE $TEMP_DIR/
 
-PKG_NAME=${EXE%.exe}_$(date "+%Y-%m-%d_%H-%M-%S").tar.gz
+PKG_NAME=${EXE%.exe}_$(date "+%Y-%m-%d_%H-%M-%S").zip
 PKG_NAME=`basename $PKG_NAME`
 
-tar cfz $PKG_NAME $TEMP_DIR/*
+pushd $TEMP_DIR >/dev/null
+zip ../$PKG_NAME ./*
+#tar cfz $PKG_NAME $TEMP_DIR/*
+popd
 
 rm -rf $TEMP_DIR
 
 # Clean vars.
-unset CP EXE TEMP_DIR PKG_NAME
+unset CP DLLS FULLPATH_DLLS EXE TEMP_DIR PKG_NAME USE_OBJDUMP
