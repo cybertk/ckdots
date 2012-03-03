@@ -34,7 +34,7 @@ else
             echo "[$1] Latest" >/dev/null
         else
             echo "Syncing $2"
-            [ -n "$dryrun" ] || /bin/cp "$1" "$2"
+            [ -n "$dryrun" ] || $SUDO /bin/cp "$1" "$2"
         fi
     fi
 fi
@@ -82,3 +82,8 @@ sync env ~/env
 
 #sync bin
 sync bin ~/bin
+
+#sync pptpd config
+SUDO=sudo
+sync config/pptp/pptpd.conf /etc/pptpd.conf
+sync config/pptp/ppp/pptpd-options /etc/ppp/pptpd-options
