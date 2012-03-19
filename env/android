@@ -2,9 +2,22 @@
 ANDROID_SDK=~/opt/android-sdk
 ANDROID_NDK=~/opt/android-ndk
 
+# Path for SDK general tools
+ANDROID_SDK_TOOL=$ANDROID_SDK/tools
+# Path for SDK platform tools
+ANDROID_SDK_PTOOL=$ANDROID_SDK/platform-tools
+
 # Clear the path first
-PATH=${PATH/$ANDROID_SDK:/}
+PATH=${PATH/$ANDROID_SDK_TOOL:/}
+PATH=${PATH/$ANDROID_SDK_PTOOL:/}
 PATH=${PATH/$ANDROID_NDK:/}
 
-# Setup new path
-export PATH=$ANDROID_SDK:$ANDROID_NDK:$PATH
+# Setup NDK Path.
+export PATH=$ANDROID_NDK:$PATH
+
+# Setup SDK Path.
+export PATH=$ANDROID_SDK_TOOL:$PATH
+export PATH=$ANDROID_SDK_PTOOL:$PATH
+
+unset ANDROID_SDK_TOOL
+unset ANDROID_SDK_PTOOL
