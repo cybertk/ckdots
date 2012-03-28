@@ -84,6 +84,6 @@ sync env ~/env
 sync bin ~/bin
 
 #sync pptpd config
-SUDO=sudo
-sync config/pptp/pptpd.conf /etc/pptpd.conf
-sync config/pptp/ppp/pptpd-options /etc/ppp/pptpd-options
+#SUDO=sudo
+#sync config/pptp/pptpd.conf /etc/pptpd.conf
+#sync config/pptp/ppp/pptpd-options /etc/ppp/pptpd-options
