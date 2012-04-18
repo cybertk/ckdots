@@ -1,0 +1,14 @@
+#!/bin/sh
+
+if [ $# != 1 ];
+then
+    echo "Usage: mk repo_name"
+    exit
+fi;
+
+REPO_DIR=$1
+
+# Append .git
+REPO_DIR=${REPO_DIR%.git}.git
+
+git init --bare /home/git/$REPO_DIR
