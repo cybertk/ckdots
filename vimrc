@@ -230,6 +230,7 @@
     au BufNewFile,BufRead *.{cpp,java} set tabstop=4
     au BufNewFile,BufRead *.{cpp,java} set shiftwidth=4
     au BufNewFile,BufRead *.logcat set syntax=logcat
+    au BufNewFile,BufRead *.wiki set syntax=doku
 " }
 
 " GUI Settings {
