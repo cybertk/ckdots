@@ -223,7 +223,9 @@
 
     au BufNewFile,BufRead [mM]akefile set noexpandtab
     au BufNewFile,BufRead [mM]akefile set nolist
-    au BufNewFile,BufRead *.{htm,html,cs,js} set noexpandtab
+    au BufNewFile,BufRead *.{htm,html,cs,js} set tabstop=2
+    au BufNewFile,BufRead *.{htm,html,cs,js} set shiftwidth=2
+    au BufNewFile,BufRead *.{htm,html,cs,js} set softtabstop=2
     au BufNewFile,BufRead *.{htm,html,cs,js} set nolist
 
     au BufNewFile,BufRead *.{cpp,java} set softtabstop=4
