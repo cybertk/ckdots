@@ -24,10 +24,12 @@
     "             ||+-- A backslash has no special meaning in mappings
     "             |+-- :write updates alternative file name
     "             +-- :read updates alternative file name
-    syntax on " syntax highlighting on
 " }
 
 " General {
+    filetype off
+    call pathogen#infect()
+    syntax on " syntax highlighting on
     filetype plugin indent on " load filetype plugins/indent settings
 "    set autochdir " always switch to the current file directory
     set backspace=indent,eol,start " make backspace a more flexible
