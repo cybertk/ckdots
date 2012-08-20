@@ -28,6 +28,9 @@ else
 
         echo Trying to add keys.
         ssh-add
+        for key in ~/.ssh/*.key; do
+            ssh-add "$key"
+        done
     fi
 fi
 
