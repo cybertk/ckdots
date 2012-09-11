@@ -1,5 +1,6 @@
-_SSH_AUTH_SOCK=/tmp/ssh-agent.sock
-_SSH_PID_FILE=/tmp/ssh-agent.pid
+_ID=$(id -un)
+_SSH_AUTH_SOCK="/tmp/ssh-agent.$_ID.sock"
+_SSH_PID_FILE="/tmp/ssh-agent.$_ID.pid"
 _SSH_AGENT_PID=$(cat $_SSH_PID_FILE 2>/dev/null)
 
 # validate SSH_AUTH socket.
