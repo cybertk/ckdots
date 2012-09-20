@@ -13,7 +13,10 @@ export TZ='Asia/Shanghai'
 
 # Setup PATH, invoke app I customized first
 # Reset PATH first.
-export PATH=~/bin:${PATH/`echo ~/bin`:/}
+# TODO implement in 1 line code.
+_PATH=~/bin
+export PATH=~/bin:${PATH/$_PATH:/}
+unset _PATH
 
 # Setup customized lib path
 export LD_LIBRARY_PATH=~/lib
