@@ -83,6 +83,9 @@ sync env ~/env
 #sync bin
 sync bin ~/bin
 
+#sync zsh
+sync zshrc ~/.zshrc
+
 #sync pptpd config
 #SUDO=sudo
 #sync config/pptp/pptpd.conf /etc/pptpd.conf
