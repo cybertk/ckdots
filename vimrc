@@ -225,16 +225,18 @@
 
     au BufNewFile,BufRead [mM]akefile set noexpandtab
     au BufNewFile,BufRead [mM]akefile set nolist
-    au BufNewFile,BufRead *.{htm,html,cs,js} set tabstop=2
-    au BufNewFile,BufRead *.{htm,html,cs,js} set shiftwidth=2
-    au BufNewFile,BufRead *.{htm,html,cs,js} set softtabstop=2
-    au BufNewFile,BufRead *.{htm,html,cs,js} set nolist
+    au BufNewFile,BufRead *.{htm,html,cs,js,gyp,gypi} set tabstop=2
+    au BufNewFile,BufRead *.{htm,html,cs,js,gyp,gypi} set shiftwidth=2
+    au BufNewFile,BufRead *.{htm,html,cs,js,gyp,gypi} set softtabstop=2
+    au BufNewFile,BufRead *.{htm,html,cs,js,gyp,gypi} set nolist
 
     au BufNewFile,BufRead *.{cpp,java} set softtabstop=4
     au BufNewFile,BufRead *.{cpp,java} set tabstop=4
     au BufNewFile,BufRead *.{cpp,java} set shiftwidth=4
     au BufNewFile,BufRead *.logcat set syntax=logcat
     au BufNewFile,BufRead *.wiki set syntax=doku
+    au BufNewFile,BufRead *.gyp set syntax=python
+    au BufNewFile,BufRead *.gypi set syntax=python
 " }
 
 " GUI Settings {
