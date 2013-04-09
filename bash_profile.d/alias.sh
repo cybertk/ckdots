@@ -52,4 +52,5 @@ alias t='t'
 alias u='a'
 alias v='vi -R'
 alias w='a'
+alias lk='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend'
 
