@@ -180,7 +180,6 @@
 "    map <C-l> :tabnext <CR>
     map <C-h> :bp <CR>
     map <C-l> :bn <CR>
-    noremap <C-v> :r! xclip -o <CR>
     map <C-j> <C-]>
     map <C-k> <C-t>
     inoremap <C-d> <ESC>:r!date<CR>iKyan He <kyan.ql.he@gmail.com> @ <ESC>kJA<CR>
