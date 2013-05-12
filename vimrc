@@ -140,29 +140,6 @@
 
 " Plugin Settings {
     let b:match_ignorecase = 1 " case is stupid
-    " TagList Settings {
-        let Tlist_Auto_Open=1 " let the tag list open automagically
-        let Tlist_Compact_Format = 1 " show small menu
-        let Tlist_Enable_Fold_Column = 0 " do show folding tree
-        let Tlist_Exit_OnlyWindow = 1 " if you are the last, kill
-                                        " yourself
-        let Tlist_Use_Right_Window = 0 " split to the right side
-                                        " of the screen
-        let Tlist_WinWidth = 40 " 40 cols wide, so i can (almost always)
-                                 " read my functions
-        let Tlist_Show_One_File = 1 "show tags in current file only
-        let Tlist_Display_Prototype = 1
-        " Language Specifics {
-            " just functions and classes please
-            let tlist_aspjscript_settings = 'asp;f:function;c:class' 
-            " just functions and subs please
-            let tlist_aspvbs_settings = 'asp;f:function;s:sub' 
-            " don't show variables in freaking php
-            let tlist_php_settings = 'php;c:class;d:constant;f:function' 
-            " just functions and classes please
-            let tlist_vb_settings = 'asp;f:function;c:class' 
-        " }
-    " }
 " }
 
 " Mappings {
@@ -229,13 +206,15 @@
     au BufNewFile,BufRead *.{htm,html,cs,js,gyp,gypi} set softtabstop=2
     au BufNewFile,BufRead *.{htm,html,cs,js,gyp,gypi} set nolist
 
-    au BufNewFile,BufRead *.{cpp,java} set softtabstop=4
-    au BufNewFile,BufRead *.{cpp,java} set tabstop=4
-    au BufNewFile,BufRead *.{cpp,java} set shiftwidth=4
+    au BufNewFile,BufRead *.{cpp,cc,mm,m,java} set softtabstop=2
+    au BufNewFile,BufRead *.{cpp,cc,mm,m,java} set tabstop=2
+    au BufNewFile,BufRead *.{cpp,cc,mm,m,java} set shiftwidth=2
     au BufNewFile,BufRead *.logcat set syntax=logcat
     au BufNewFile,BufRead *.wiki set syntax=doku
     au BufNewFile,BufRead *.gyp set syntax=python
     au BufNewFile,BufRead *.gypi set syntax=python
+    au BufNewFile,BufRead *.mm set syntax=cpp
+    au BufNewFile,BufRead *.m set syntax=cpp
 " }
 
 " GUI Settings {
