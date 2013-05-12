@@ -1,0 +1,6 @@
+.svn
+
+# For xcodeproj
+*.xcodeproj
+
+.DS_Store

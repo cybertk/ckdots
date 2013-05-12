@@ -74,8 +74,8 @@ sync bash_logout ~/.bash_logout
 #sync xinit
 sync xinitrc ~/.xinitrc
 
-#sync git
-sync gitconfig ~/.gitconfig
+#setup git
+git config --global core.excludesfile $PWD/gitignore_global
 
 #sync env
 sync env ~/env
