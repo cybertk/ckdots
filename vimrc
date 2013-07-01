@@ -201,10 +201,10 @@
 
     au BufNewFile,BufRead [mM]akefile set noexpandtab
     au BufNewFile,BufRead [mM]akefile set nolist
-    au BufNewFile,BufRead *.{htm,html,cs,js,gyp,gypi,python} set tabstop=2
-    au BufNewFile,BufRead *.{htm,html,cs,js,gyp,gypi,python} set shiftwidth=2
-    au BufNewFile,BufRead *.{htm,html,cs,js,gyp,gypi,python} set softtabstop=2
-    au BufNewFile,BufRead *.{htm,html,cs,js,gyp,gypi,python} set nolist
+    au BufNewFile,BufRead *.{htm,html,cs,js,gyp,gypi,py} set tabstop=2
+    au BufNewFile,BufRead *.{htm,html,cs,js,gyp,gypi,py} set shiftwidth=2
+    au BufNewFile,BufRead *.{htm,html,cs,js,gyp,gypi,py} set softtabstop=2
+    au BufNewFile,BufRead *.{htm,html,cs,js,gyp,gypi,py} set nolist
 
     au BufNewFile,BufRead *.{cpp,cc,mm,m,java} set softtabstop=2
     au BufNewFile,BufRead *.{cpp,cc,mm,m,java} set tabstop=2
