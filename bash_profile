@@ -19,7 +19,9 @@ export PATH=~/bin:${PATH/$_PATH:/}
 unset _PATH
 
 # Setup customized lib path
-export LD_LIBRARY_PATH=~/lib
+# On Mac 10.8, we get the following warning
+#   dyld: DYLD_ environment variables being ignored because main executable (/usr/bin/sudo) is setuid or setgid
+# export LD_LIBRARY_PATH=~/lib
 
 # set colorful PS1 and enable color for ls etc.
 if which dircolors >/dev/null ; then
