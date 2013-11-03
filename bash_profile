@@ -11,6 +11,11 @@ export LANG="en_US.UTF8"
 
 export TZ='Asia/Shanghai'
 
+# Brew use /usr/local/bin
+_PATH=/usr/local/bin
+export PATH=$_PATH:${PATH/$_PATH:/}
+unset _PATH
+
 # Setup PATH, invoke app I customized first
 # Reset PATH first.
 # TODO implement in 1 line code.
