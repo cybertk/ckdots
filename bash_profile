@@ -2,6 +2,8 @@
 #
 # Copyright 2010 Kyan He, <kyan.ql.he@gmail.com>
 
+# .bash_profile vs .bashrc, see http://www.joshstaiger.org/archives/2005/07/bash_profile_vs.html
+
 umask 027
 
 # set PAGER to vim if exists
@@ -33,7 +35,7 @@ if which dircolors >/dev/null ; then
         [ -f ~/.dir_colors ] && eval $(dircolors -b ~/.dir_colors)
 fi
 
-PS1="\[\033[0;1;32m\][\j] [$(date +%R:%S)\[\033[0;32m\]@\h\[\033[0;1;32m\]] [$(basename `tty`)] \[\033[0;32m\]\w\n\$ "
+PS1="\[\033[0;1;32m\][\j] [$(date +%R:%S)\[\033[0;32m\]@\h\[\033[0;1;32m\]] [$(basename `tty`)] \[\033[0;32m\]\w\n\$ \[\033[0;37m\]"
 
 export EDITOR=vim
 
