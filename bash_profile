@@ -7,7 +7,7 @@ umask 027
 # set PAGER to vim if exists
 [ -e ~/bin/vimpager ] && export PAGER=~/bin/vimpager
 
-export LANG="en_US.UTF8"
+export LANG="C"
 
 export TZ='Asia/Shanghai'
 
