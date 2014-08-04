@@ -1,19 +1,16 @@
 _ID=$(id -un)
-_SSH_AUTH_SOCK="/tmp/ssh-agent.$_ID.sock"
-_SSH_PID_FILE="/tmp/ssh-agent.$_ID.pid"
 _SSH_LOCK="/tmp/ssh-agent.$_ID.lock"
 
 # Mutex lock to make this script running exclusively.
-_count=0
-while ! mkdir $_SSH_LOCK; do
-  echo "Acquring ssh-agent lock."
-  sleep 1
-  let _count=_count+1
-  if [[ $_count -gt 5 ]]; then
-    echo Failed
-    return
-  fi
-done
+# Acquire Lock
+if ! mkdir $_SSH_LOCK; then
+  unset _ID
+  unset _SSH_LOCK
+  return
+fi
+
+_SSH_AUTH_SOCK="/tmp/ssh-agent.$_ID.sock"
+_SSH_PID_FILE="/tmp/ssh-agent.$_ID.pid"
 
 _SSH_AGENT_PID=$(cat $_SSH_PID_FILE 2>/dev/null)
 
@@ -46,8 +43,11 @@ else
     fi
 fi
 
+# Release Lock
 rmdir $_SSH_LOCK
 
+unset _ID
+unset _SSH_LOCK
 unset _SSH_AUTH_SOCK
 unset _SSH_AGENT_PID
 unset _SSH_PID_FILE
