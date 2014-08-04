@@ -19,8 +19,8 @@ _SSH_AGENT_PID=$(cat $_SSH_PID_FILE 2>/dev/null)
 
 # validate SSH_AUTH socket.
 # validate pid of runing ssh-agent, use /proc/pid/fd to elimate pid=""
-if [[ -S "$_SSH_AUTH_SOCK" &&
-    -d "/proc/$_SSH_AGENT_PID/fd" ]]; then
+# /proc/pid/fd not work for mac, prefer lsof -p pid
+if [ -S "$_SSH_AUTH_SOCK" ]; then
 
     # ssh-agent is already running now.
     export SSH_AUTH_SOCK=$_SSH_AUTH_SOCK
