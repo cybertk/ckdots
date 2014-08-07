@@ -13,12 +13,7 @@ case $(uname) in
         ;;
 esac
 
-if rsync 2 >&1 1>&/dev/null;
-then
-    alias cp='rsync --progress'
-else
-    echo "no rsync found"
-fi
+which -s rsync && alias cp='rsync --progress'
 alias cpp='cp'
 alias mv='mv -iv'
 alias rm='rm -iv'
@@ -53,4 +48,4 @@ alias u='a'
 alias v='vi -R'
 alias w='a'
 alias lk='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend'
-
+which -s hub && alias git='hub'
