@@ -1,3 +1,3 @@
 source "https://rubygems.org"
 
-gem "shlint"
+gem "shlint", :git => 'https://github.com/cybertk/shlint.git'

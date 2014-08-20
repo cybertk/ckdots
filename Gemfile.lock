@@ -1,0 +1,15 @@
+GIT
+  remote: https://github.com/cybertk/shlint.git
+  revision: 675979a56d05fbd551da5b327cea22ba4813ea54
+  specs:
+    shlint (0.1.6)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  shlint!
