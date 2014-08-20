@@ -36,3 +36,10 @@ task :install do
     install_bashrc('~/.bashrc')
     install_bashrc('~/.bash_profile')
 end
+
+task :lint do
+    shs = Dir.glob("**/*.sh")
+    shs << "bashrc"
+
+    sh "shlint #{shs.join(' ')}"
+end
