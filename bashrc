@@ -47,7 +47,7 @@ export QT_IM_MODULE=ibus
 
 # invoke plugins
 # Global
-for sh in ${CK_PROFILE_DIR}/bash_profile.d/*.sh; do . "$sh"; done
+for sh in ${CK_BASHRC_DIR}/bash_profile.d/*.sh; do . "$sh"; done
 
 # Private
 if [ -d ./.bash_profile.d ]; then
