@@ -1,4 +1,4 @@
-task default: [:install]
+task default: [:uninstall, :install]
 
 @BASHRC = <<END
 #!/bin/sh
@@ -33,9 +33,27 @@ def install_bashrc(file)
     end
 end
 
+def uninstall_bashrc(file)
+    file = File.expand_path file
+    c = File.read(file)
+    if c == @BASHRC
+        backup_file = "#{file}.bak"
+        if File.exist?(backup_file)
+            puts "Restoring #{backup_file}"
+            File.delete(file)
+            File.rename(backup_file, file)
+        end
+    end
+end
+
 task :install do
     install_bashrc('~/.bashrc')
     install_bashrc('~/.bash_profile')
+end
+
+task :uninstall do
+    uninstall_bashrc('~/.bashrc')
+    uninstall_bashrc('~/.bash_profile')
 end
 
 task :lint do
