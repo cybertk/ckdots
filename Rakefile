@@ -60,5 +60,5 @@ task :lint do
     shs = Dir.glob("**/*.sh")
     shs << "bashrc"
 
-    sh "shlint #{shs.join(' ')}"
+    sh "shellcheck #{shs.join(' ')}"
 end

@@ -1,2 +1,4 @@
+install:
+  - brew install shellcheck
 script:
-- rake lint
+  - rake lint
