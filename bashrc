@@ -14,17 +14,21 @@ export LANG=en_US.UTF-8
 
 export TZ='Asia/Shanghai'
 
+# Setup PATH, invoke app I customized first
+# TODO implement in 1 line code.
+
 # Brew use /usr/local/bin
 _PATH=/usr/local/bin
 export PATH=$_PATH:${PATH/$_PATH:/}
-unset _PATH
 
-# Setup PATH, invoke app I customized first
-# Reset PATH first.
-# TODO implement in 1 line code.
+# Bins from ck-bashrc
+_PATH=$CK_BASHRC_DIR/bin
+export PATH=$_PATH:${PATH/$_PATH:/}
+
+# Bins of user customized first
 _PATH=~/bin
-export PATH=~/bin:${PATH/$_PATH:/}
-unset _PATH
+export PATH=$_PATH:${PATH/$_PATH:/}
+
 
 # Setup customized lib path
 # On Mac 10.8, we get the following warning
@@ -35,7 +39,6 @@ unset _PATH
 if which dircolors >/dev/null ; then
         [ -f ~/.dir_colors ] && eval $(dircolors -b ~/.dir_colors)
 fi
-
 PS1="\[\033[0;1;32m\][\j] [$(date +%R:%S)\[\033[0;32m\]@\h\[\033[0;1;32m\]] [$(basename `tty`)] \[\033[0;32m\]\w\n\$ \[\033[0;37m\]"
 
 export EDITOR=vim
