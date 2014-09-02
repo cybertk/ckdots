@@ -1,4 +1,5 @@
+ghc: 7.4
 install:
-  - brew install shellcheck
+  - cabal install shellcheck
 script:
   - rake lint
