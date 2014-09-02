@@ -33,6 +33,9 @@ def Unzip(zipfile_name, enc)
       # Extract to file/directory/symlink
       name = entry.name.encode!('utf-8', enc)
       puts "Extracting #{name}"
+
+      # Create dir if unexit
+      Dir.mkdir(File.dirname(name)) unless Dir.exists?(File.dirname(name))
       entry.extract(name)
     end
   end
