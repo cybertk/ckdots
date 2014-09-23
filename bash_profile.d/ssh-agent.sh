@@ -1,28 +1,30 @@
 _ID=$(id -un)
 _SSH_LOCK="/tmp/ssh-agent.$_ID.lock"
 
-# Mutex lock to make this script running exclusively.
-# Acquire Lock
-if ! mkdir $_SSH_LOCK; then
-  unset _ID
-  unset _SSH_LOCK
-  return
-fi
-
 _SSH_AUTH_SOCK="/tmp/ssh-agent.$_ID.sock"
 _SSH_PID_FILE="/tmp/ssh-agent.$_ID.pid"
 
 _SSH_AGENT_PID=$(cat $_SSH_PID_FILE 2>/dev/null)
 
+export SSH_AUTH_SOCK=$_SSH_AUTH_SOCK
+export SSH_AGENT_PID=$_SSH_AGENT_PID
+
+# Mutex lock to make this script running exclusively.
+# Acquire Lock
+if ! mkdir $_SSH_LOCK; then
+  unset _ID
+  unset _SSH_LOCK
+  unset _SSH_AUTH_SOCK
+  unset _SSH_PID_FILE
+  unset _SSH_AGENT_PID
+
+  return
+fi
+
 # validate SSH_AUTH socket.
 # validate pid of runing ssh-agent, use /proc/pid/fd to elimate pid=""
 # /proc/pid/fd not work for mac, prefer lsof -p pid
-if [ -S "$_SSH_AUTH_SOCK" ]; then
-
-    # ssh-agent is already running now.
-    export SSH_AUTH_SOCK=$_SSH_AUTH_SOCK
-    export SSH_AGENT_PID=$_SSH_AGENT_PID
-else
+if [ ! -S "$_SSH_AUTH_SOCK" ]; then
     # \todo kill ssh-agent use $_SSH_AUTH_SOCK
     # Remove $_SSH_AUTH_SOCK to avoid "bind: Address already in use"
     [[ -S "$_SSH_AUTH_SOCK" ]] && /bin/rm $_SSH_AUTH_SOCK
