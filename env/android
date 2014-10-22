@@ -1,23 +1,45 @@
+# Copy from https://gist.github.com/cybertk/28565ee95d74e65444e6#file-android-dev-env-setup-sh
 
-ANDROID_SDK=~/opt/android-sdk
-ANDROID_NDK=~/opt/android-ndk
+MAC_SDK_DIR="/Applications/Android Studio.app/sdk"
+LINUX_SDK_DIR="~/opt/android-sdk"
 
-# Path for SDK general tools
-ANDROID_SDK_TOOL=$ANDROID_SDK/tools
-# Path for SDK platform tools
-ANDROID_SDK_PTOOL=$ANDROID_SDK/platform-tools
+if [ -d "$MAC_SDK_DIR" ]; then
+    ANDROID_SDK=$MAC_SDK_DIR
+fi
 
-# Clear the path first
-PATH=${PATH/$ANDROID_SDK_TOOL:/}
-PATH=${PATH/$ANDROID_SDK_PTOOL:/}
-PATH=${PATH/$ANDROID_NDK:/}
+# Setup Android SDK Env
+if [ -n "$ANDROID_SDK" ]; then
+    echo "Load Android SDK at $MAC_SDK_DIR"
 
-# Setup NDK Path.
-export PATH=$ANDROID_NDK:$PATH
+    # Path for SDK general tools
+    ANDROID_SDK_TOOL=$ANDROID_SDK/tools
+    # Path for SDK platform tools
+    ANDROID_SDK_PTOOL=$ANDROID_SDK/platform-tools
 
-# Setup SDK Path.
-export PATH=$ANDROID_SDK_TOOL:$PATH
-export PATH=$ANDROID_SDK_PTOOL:$PATH
+    # Clear the path first
+    PATH=${PATH/$ANDROID_SDK_TOOL:/}
+    PATH=${PATH/$ANDROID_SDK_PTOOL:/}
 
-unset ANDROID_SDK_TOOL
-unset ANDROID_SDK_PTOOL
+    # Setup path
+    export PATH=$ANDROID_SDK_TOOL:$PATH
+    export PATH=$ANDROID_SDK_PTOOL:$PATH
+
+    unset ANDROID_SDK_TOOL
+    unset ANDROID_SDK_PTOOL
+    unset ANDROID_SDK
+fi
+
+# Setup Android NDK path
+if [ -n "$ANDROID_NDK" ]; then
+    # Clear the path first
+    PATH=${PATH/$ANDROID_NDK:/}
+
+    # Setup NDK Path.
+    export PATH=$ANDROID_NDK:$PATH
+
+    # Clear
+    unset ANDROID_NDK
+fi
+
+unset MAC_SDK_DIR
+unset LINUX_SDK_DIR
