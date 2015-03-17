@@ -13,7 +13,6 @@ case $(uname) in
         ;;
 esac
 
-which -s rsync && alias cp='rsync --progress'
 alias cpp='cp'
 alias mv='mv -iv'
 alias rm='rm -iv'
