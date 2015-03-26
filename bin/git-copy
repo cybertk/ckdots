@@ -19,16 +19,12 @@ DST_REPO=$2
 
 # Clone source into temp working dir
 repo_name=`mktemp -d -t ck-git-copy`
-git clone --mirror ${SRC_REPO} ${repo_name}
+git clone --bare ${SRC_REPO} ${repo_name}
 pushd ${repo_name} > /dev/null
-
-# Update local refs
-git fetch --prune --progress
-git fetch --prune --tags --progress
 
 # Push to destination
 echo "Pushing to ${DST_REPO}"
-git push -f --prune ${DST_REPO} +refs/heads/*:refs/heads/* +refs/tags/*:refs/tags/*
+git push --mirror ${DST_REPO}
 
 # Recovery
 popd > /dev/null
