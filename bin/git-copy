@@ -1,0 +1,33 @@
+#!/bin/sh
+#
+# Copy a remote git repo to another remote destination
+#
+# Copyright (C) 2015 Quanlong <kyan.ql.he@gmail.com>
+
+set -e
+
+# Options validation
+if [ -z "$1" -o -z "$2" ];
+then
+    echo "Usage: git copy <source_repo_url> <destionation_repo_url>"
+    exit 1
+fi
+
+SRC_REPO=$1
+DST_REPO=$2
+
+# Clone source into temp working dir
+repo_name=`mktemp -d -t ck-git-copy`
+[[ -d "${repo_name}" ]] || git clone --mirror ${SRC_REPO} ${repo_name}
+pushd ${repo_name} > /dev/null
+
+# Update local refs
+git fetch --prune --progress
+git fetch --prune --tags --progress
+
+# Push to destination
+git push -f --prune ${DST_REPO} +refs/heads/*:refs/heads/* +refs/tags/*:refs/tags/*
+
+# Recovery
+popd > /dev/null
+rm -rf ${repo_name}
