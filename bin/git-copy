@@ -1,6 +1,7 @@
 #!/bin/sh
 #
 # Copy a remote git repo to another remote destination
+# https://gist.github.com/cybertk/8a61ed9aca71a66cd711
 #
 # Copyright (C) 2015 Quanlong <kyan.ql.he@gmail.com>
 
