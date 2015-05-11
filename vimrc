@@ -138,6 +138,12 @@
                                    " (cleaner than default)
 " }
 
+" Plugins {
+call plug#begin('~/.vim/plugged')
+
+call plug#end()
+" }
+"
 " Plugin Settings {
     let b:match_ignorecase = 1 " case is stupid
 " }
