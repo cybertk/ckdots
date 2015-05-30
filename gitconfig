@@ -1,5 +1,9 @@
 [user]
 	email = kyan.ql.he@gmail.com
-	name = Kyan He
+	name = Quanlong He
 [color]
 	ui = auto
+[push]
+	default = simple
+[credential]
+	helper = osxkeychain
