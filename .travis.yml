@@ -3,3 +3,5 @@ install:
   - cabal install shellcheck
 script:
   - rake lint
+notifications:
+  email: false
