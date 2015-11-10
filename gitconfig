@@ -4,6 +4,12 @@
 [color]
 	ui = auto
 [push]
-	default = simple
+	default = current
 [credential]
 	helper = osxkeychain
+[filter "lfs"]
+	clean = git lfs clean %f
+	smudge = git lfs smudge %f
+	required = true
+[remote]
+	pushdefault = origin
