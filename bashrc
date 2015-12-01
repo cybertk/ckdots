@@ -48,6 +48,11 @@ export GTK_IM_MODULE=ibus
 export XMODIFIERS=@im=ibus
 export QT_IM_MODULE=ibus
 
+# Setep iTerm tab title, see https://gist.github.com/phette23/5270658
+if [ $ITERM_SESSION_ID ]; then
+    export PROMPT_COMMAND='echo -ne "\033];${PWD##*/}\007"; ':"$PROMPT_COMMAND";
+fi
+
 # invoke plugins
 # Global
 for sh in ${CK_BASHRC_DIR}/bash_profile.d/*.*sh; do . "$sh"; done
