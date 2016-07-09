@@ -13,6 +13,10 @@ CK_BASHRC_DIR="#{File.dirname(__FILE__)}"
 END
 
 def backup(file)
+    if not File.exist?(file)
+        return
+    end
+
     backup_file = file
     while File.exist?(backup_file)
         backup_file += ".bak"
@@ -49,6 +53,8 @@ end
 task :install do
     install_bashrc('~/.bashrc')
     install_bashrc('~/.bash_profile')
+    install_link('.vim')
+    install_link('.vimrc')
 end
 
 task :uninstall do
