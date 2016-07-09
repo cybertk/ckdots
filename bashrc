@@ -53,7 +53,7 @@ export QT_IM_MODULE=ibus
 for sh in ${CK_BASHRC_DIR}/bash_profile.d/*.*sh; do . "$sh"; done
 
 # Load configs
-[ -f ~/.config/ck-dots ] && . ~/.config/ck-dots
+[ -e ~/.config/ck-dots ] && . ~/.config/ck-dots
 
 # Private
 if [ -d ~/.bash_profile.d ]; then
