@@ -18,7 +18,8 @@ function proxy() {
         # Turn on proxy
         export https_proxy="$CONFIG_PROXY_URL"
         export http_proxy="$CONFIG_PROXY_URL"
-        export no_proxy="$CONFIG_PROXY_BYPASS"
+        # Support inline script in $CONFIG_PROXY_BYPASS. e.g. CONFIG_PROXY_BYPASS='localhost,$(docker-machine ip)'
+        export no_proxy="$(eval "echo $CONFIG_PROXY_BYPASS")"
     fi
 
     # Show current proxy status
