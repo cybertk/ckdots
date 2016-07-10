@@ -54,6 +54,8 @@ for sh in ${CK_BASHRC_DIR}/bash_profile.d/*.*sh; do . "$sh"; done
 
 # Load configs
 [ -e ~/.config/ck-dots ] && . ~/.config/ck-dots
+export CKDOTS_MODULES=${CK_BASHRC_DIR}/bash_profile.d
+export CKDOTS_HOOKS=~/.config/ck-dots-hooks
 
 # Private
 if [ -d ~/.bash_profile.d ]; then

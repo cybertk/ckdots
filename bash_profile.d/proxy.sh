@@ -14,12 +14,16 @@ function proxy() {
         unset https_proxy
         unset http_proxy
         unset no_proxy
+
+        [[ -x $CKDOTS_HOOKS ]] && $CKDOTS_HOOKS proxy_on
     elif [[ "$opt" = on ]]; then
         # Turn on proxy
         export https_proxy="$CONFIG_PROXY_URL"
         export http_proxy="$CONFIG_PROXY_URL"
         # Support inline script in $CONFIG_PROXY_BYPASS. e.g. CONFIG_PROXY_BYPASS='localhost,$(docker-machine ip)'
         export no_proxy="$(eval "echo $CONFIG_PROXY_BYPASS")"
+
+        [[ -x $CKDOTS_HOOKS ]] && $CKDOTS_HOOKS proxy_off
     fi
 
     # Show current proxy status
