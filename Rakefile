@@ -1,6 +1,9 @@
 task default: [:uninstall, :install]
 
-@BASHRC = <<END
+
+class Installer
+
+  @@BASHRC = <<END
 #!/bin/sh
 #
 # NOTE: Do **NOT** edit this file.
@@ -12,54 +15,83 @@ CK_BASHRC_DIR="#{File.dirname(__FILE__)}"
 . ${CK_BASHRC_DIR}/bashrc
 END
 
-def backup(file)
-    if not File.exist?(file)
-        return
+  def initialize(*args)
+    @dot_items=[
+      'vim',
+      'vimrc',
+      'gitconfig',
+      'gitignore',
+    ]
+  end
+
+  def install()
+    # Copy first to make world safe
+    _backup()
+    _remove()
+    _install()
+  end
+
+  def uninstall()
+    _remove()
+    # restore_backup()
+  end
+
+  def _install()
+    @dot_items.each do |item|
+      puts "Installing .#{item}"
+      FileUtils.ln_sf File.absolute_path(item), File.join(Dir.home, ".#{item}")
     end
 
-    backup_file = file
-    while File.exist?(backup_file)
-        backup_file += ".bak"
+    ['.bashrc', '.bash_profile'].each do |item|
+      puts "Installing #{item}"
+      File.open(File.join(Dir.home, item), 'w') do |f|
+        f.write(@@BASHRC)
+      end
     end
 
-    File.rename(file, backup_file)
-    puts "Backup #{file} to #{backup_file}"
-end
+  end
 
-def install_bashrc(file)
-    puts "Instaling #{file}"
+  def _backup()
+    backup_path = File.expand_path "~/ck-dots-backup-#{Time.now.strftime("%Y%m%d-%H%M")}"
+    puts "Backup to #{backup_path}"
 
-    file = File.expand_path file
+    FileUtils.mkdir_p backup_path
 
-    backup(file)
-    File.open(file, 'w') do |f|
-        f.write(@BASHRC)
+    # Backup dots
+    @dot_items.each do |item|
+      file=File.join(Dir.home, ".#{item}")
+
+      break unless File.exist? file
+
+      puts "Backuping .#{item}"
+      FileUtils.cp_r file, backup_path
     end
-end
 
-def uninstall_bashrc(file)
-    file = File.expand_path file
-    c = File.read(file)
-    if c == @BASHRC
-        backup_file = "#{file}.bak"
-        if File.exist?(backup_file)
-            puts "Restoring #{backup_file}"
-            File.delete(file)
-            File.rename(backup_file, file)
-        end
+    # Backup bashrc and bash_profile
+    ['.bashrc', '.bash_profile'].each do |item|
+      puts "Backuping #{item}"
+      FileUtils.cp File.join(Dir.home, item), backup_path
     end
+
+  end
+
+  def _remove()
+    # Remove unused
+    @dot_items.each do |item|
+      item=File.join(Dir.home, ".#{item}")
+      puts "removing #{item}"
+      FileUtils.rm_rf item
+    end
+  end
+
 end
 
 task :install do
-    install_bashrc('~/.bashrc')
-    install_bashrc('~/.bash_profile')
-    install_link('.vim')
-    install_link('.vimrc')
+    Installer.new.install()
 end
 
 task :uninstall do
-    uninstall_bashrc('~/.bashrc')
-    uninstall_bashrc('~/.bash_profile')
+    Installer.new.uninstall()
 end
 
 task :lint do
@@ -67,4 +99,8 @@ task :lint do
     shs << "bashrc"
 
     sh "shellcheck #{shs.join(' ')}"
+end
+
+task :test do
+    sh "ruby -Ilib:test tests/test_installer.rb"
 end
