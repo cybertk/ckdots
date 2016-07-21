@@ -50,12 +50,12 @@ export QT_IM_MODULE=ibus
 
 # Load configs
 [ -e ~/.config/ck-dots ] && . ~/.config/ck-dots
-export CKDOTS_MODULES=${CK_BASHRC_DIR}/bash_profile.d
+export CKDOTS_MODULES=${CK_BASHRC_DIR}/plugins
 export CKDOTS_HOOKS=~/.config/ck-dots-hooks
 
 # invoke plugins
 # Global
-for sh in ${CK_BASHRC_DIR}/bash_profile.d/*.*sh; do . "$sh"; done
+for sh in ${CK_BASHRC_DIR}/plugins/*.*sh; do . "$sh"; done
 
 # Private
 if [ -d ~/.bash_profile.d ]; then

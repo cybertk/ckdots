@@ -12,7 +12,7 @@ class Installer
 
 CK_BASHRC_DIR="#{File.dirname(__FILE__)}"
 # Source bashrc provided by cybertk/profile
-. ${CK_BASHRC_DIR}/bashrc
+. ${CK_BASHRC_DIR}/dots/bashrc
 END
 
   def initialize(*args)
@@ -39,7 +39,7 @@ END
   def _install()
     @dot_items.each do |item|
       puts "Installing .#{item}"
-      FileUtils.ln_sf File.absolute_path(item), File.join(Dir.home, ".#{item}")
+      FileUtils.ln_sf File.absolute_path(File.join 'dots', item), File.join(Dir.home, ".#{item}")
     end
 
     ['.bashrc', '.bash_profile'].each do |item|
