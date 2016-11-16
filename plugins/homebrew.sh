@@ -1,5 +1,6 @@
 # Increase Github rate limit by using api token
 export HOMEBREW_GITHUB_API_TOKEN=$CONFIG_GITHUB_API_TOKEN
+export HOMEBREW_AUTO_UPDATE_SECS=$CONFIG_HOMEBREW_AUTO_UPDATE_SECS
 
 # Avialble Bottle Mirrors, select one and add into ~/.config/ck-bots
 # - https://mirrors.ustc.edu.cn/homebrew-bottles
