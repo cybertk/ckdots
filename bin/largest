@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+list_dir_by_size() {
+    declare dir="$1"
+
+    echo "$dir"
+    find "$dir" -type d -depth 1 -print0 | xargs -0 du -hs | gsort -hr
+}
+
+usage() {
+    echo "largest <path_of_dir>"
+    echo ""
+    echo "List the directory sorted by size"
+}
+
+main() {
+
+    if [[ "$1" = "--help" || "$1" = "-h" ]]; then
+        usage
+        exit 1
+    fi
+
+    list_dir_by_size "${1:-$(pwd)}"
+}
+
+main "$@"
