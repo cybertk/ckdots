@@ -12,4 +12,6 @@
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 [remote]
-	pushdefault = origin
+    pushdefault = origin
+[alias]
+    cleanup = "!git branch --merged | grep  -v '\\*\\|master' | xargs -n 1 git branch -d"
