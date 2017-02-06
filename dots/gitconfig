@@ -1,6 +1,7 @@
 [user]
 	email = kyan.ql.he@gmail.com
 	name = Quanlong
+	signingkey = 24924F42A4783741
 [color]
 	ui = auto
 [push]
