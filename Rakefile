@@ -22,6 +22,10 @@ END
       'gitconfig',
       'gitignore',
     ]
+    @profiles=[
+      '.bashrc',
+      '.bash_profile',
+    ]
   end
 
   def install()
@@ -42,12 +46,22 @@ END
       FileUtils.ln_sf File.absolute_path(File.join 'dots', item), File.join(Dir.home, ".#{item}")
     end
 
-    ['.bashrc', '.bash_profile'].each do |item|
+    @profiles.each do |item|
       puts "Installing #{item}"
       File.open(File.join(Dir.home, item), 'w') do |f|
         f.write(@@BASHRC)
       end
     end
+
+  end
+
+  def _backup_file(src, dest)
+      if File.exist? src
+        puts "Backuping #{src}"
+        FileUtils.cp_r src, dest
+      else
+        puts "Skipping backup #{src}"
+      end
 
   end
 
@@ -59,18 +73,12 @@ END
 
     # Backup dots
     @dot_items.each do |item|
-      file=File.join(Dir.home, ".#{item}")
-
-      break unless File.exist? file
-
-      puts "Backuping .#{item}"
-      FileUtils.cp_r file, backup_path
+      _backup_file File.join(Dir.home, ".#{item}"), backup_path
     end
 
     # Backup bashrc and bash_profile
-    ['.bashrc', '.bash_profile'].each do |item|
-      puts "Backuping #{item}"
-      FileUtils.cp File.join(Dir.home, item), backup_path
+    @profiles.each do |item|
+      _backup_file File.join(Dir.home, item), backup_path
     end
 
   end
@@ -79,7 +87,7 @@ END
     # Remove unused
     @dot_items.each do |item|
       item=File.join(Dir.home, ".#{item}")
-      puts "removing #{item}"
+      puts "Removing #{item}"
       FileUtils.rm_rf item
     end
   end
