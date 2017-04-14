@@ -32,3 +32,7 @@ function proxy() {
     [[ -n $https_proxy || -n "$http_proxy" ]] && echo "PROXY_BYPASS: $no_proxy"
 }
 
+# Activate proxy if CONFIG_PROXY_ON is set
+if [[ -n "$CONFIG_PROXY_ON" ]]; then
+    proxy on
+fi
