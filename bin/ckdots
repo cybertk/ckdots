@@ -30,7 +30,8 @@ install_backup() {
 install_profile() {
     declare profile="$1" config_path="$2"
 
-    cat >"$profile" <<EOF
+    echo "==> Installing profile $profile"
+    cat >"$HOME/$profile" <<EOF
 #!/bin/sh
 
 # NOTE: Do **NOT** edit this file.
@@ -47,6 +48,7 @@ EOF
 install_dot_file() {
     local dot_file="$1"
 
+    echo "==> Installing dotfile $dot"
     ln -sf "$dot_file" ~/
 }
 
@@ -56,10 +58,10 @@ install_main() {
     for dot in $dots; do
         local f="$path/dots/$dot"
 
-        echo "==> Installing $dot"
         install_dot_file "$f"
     done
-    install_profile ~/.bash_profile "$path"
+    install_profile .bash_profile "$path"
+    install_profile .bashrc "$path"
 }
 
 # Usage:
@@ -186,7 +188,7 @@ main() {
     if [[ -z "$1" ]] || [[ "$1" = help ]] || [[ "$1" = "-h" ]] || [[ "$1" = "--help" ]]; then
         usage
     elif [[ "$1" = install ]]; then
-        echo pass
+        install
     elif [[ "$1" = ls ]] || [[ "$1" = list ]]; then
         list
     elif [[ "$1" = add ]] && [ $# -gt 1 ]; then
