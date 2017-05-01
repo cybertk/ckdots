@@ -100,7 +100,6 @@ Available commands:
    install           Install on a new device
    ls                List all saved dotfiles
    add               Add new dotfile
-   rm                Remove a saved dotfile
    help              Print this help
 "
 }
@@ -160,26 +159,26 @@ status() {
     local dots dots_user dots_tracked dots_untracked dots_ignored
 
     # find -printf "%P" does work on macOS
-    dots_user="$(status_find_dots "$HOME")"
-    dots_tracked="$(status_find_dots "$CKDOTS_CONFIG/dots")"
-    dots_ignored="$(printf '%s\n' ${_DOTS_IGNORED[@]} | sort -f)"
+    dots_user=( "$(status_find_dots "$HOME")" )
+    dots_tracked=( "$(status_find_dots "$CKDOTS_CONFIG/dots")" )
+    dots_ignored=( "$(printf '%s\n' "${_DOTS_IGNORED[@]}" | sort -f)" )
 
     # More set operation in shell, see http://www.catonmat.net/blog/set-operations-in-unix-shell/
-    dots_untracked=$(comm -i23 <(printf '%s\n' $dots_user) <(printf '%s\n' $dots_tracked))
-    dots_untracked=$(comm -i23 <(printf '%s\n' $dots_untracked) <(printf '%s\n' $dots_ignored))
+    dots_untracked=( $(comm -i23 <(printf '%s\n' "${dots_user[@]}") <(printf '%s\n' "${dots_tracked[@]}")) )
+    dots_untracked=( $(comm -i23 <(printf '%s\n' "${dots_untracked[@]}") <(printf '%s\n' "${dots_ignored[@]}")) )
 
     echo 'Tracked dots:'
-    status_print_dots "$dots_tracked"
+    status_print_dots "${dots_tracked[*]}"
     echo '
 Untracked dots:
   (use "ckdots add <file>..." to include in what will be managed)
 '
-    status_print_dots "$dots_untracked"
+    status_print_dots "${dots_untracked[*]}"
     echo '
 Ignored files:
   (use "ckdots add <file>..." to include in what will be committed)
 '
-    status_print_dots "$dots_ignored"
+    status_print_dots "${dots_ignored[*]}"
 }
 
 main() {
