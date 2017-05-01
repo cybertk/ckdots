@@ -1,22 +1,32 @@
-# ck-bashrc
+# ck-dots
 
-[![CI Status](http://img.shields.io/travis/cybertk/ck-bashrc.svg?style=flat)](https://travis-ci.org/cybertk/ck-bashrc)
+> Manage your dotfiles across all your devices
 
-## Features
+[![CI Status](http://img.shields.io/travis/cybertk/ck-dots.svg?style=flat)](https://travis-ci.org/cybertk/ck-dots)
 
-* Auto load ssh keys and shared between all shells
-* Hooks, load your customized scripts
-* Common alias
-* Colorful shell prompt(PS1)
+## Getting Started
 
-## Installation
+Install from source
 
-Install ck-bashrc by cloning the git repo
+```
+git clone https://github.com/cybertk/ck-dots.git
+cd ck-dots
+./install
+```
 
-    git clone https://github.com/cybertk/ck-bashrc.git
-    cd ck-bashrc
-    rake install
+## Command Line Usages
+
+- restore, restore previous saved dotfiles(from config repo) on a new machine
+- install, let **ck-dots** manage dotfiles on a new device
+- uninstall, uninstall
+- ls, list all dotfiles **ck-dots** managed
+- add, save specifed dotfile into config repo, let **ck-dots** manage it
+- rm, remove specifed dotfile from config repo
+- upgrade, upgrade to latest version
+
+
+## Plugins
 
 ## License
 
-ck-bashrc is available under the MIT license. See the LICENSE file for more info.
+ck-dots is available under the MIT license. See the LICENSE file for more info.

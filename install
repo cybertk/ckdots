@@ -2,8 +2,9 @@
 
 _DEFAULT_FILES=""
 _SHELL_PROFILES=".bashrc .bash_profile"
+_DOTS_IGNORED=(.DS_Store)
 
-backup() {
+install_backup() {
     declare dots="$1" backup_dir="$2"
     local dest
 
@@ -49,14 +50,14 @@ install_dot_file() {
     ln -sf "$dot_file" ~/
 }
 
-install() {
+install_main() {
     declare dots="$1" path="$2"
 
     for dot in $dots; do
         local f="$path/dots/$dot"
 
         echo "==> Installing $dot"
-        install_dot_file "$f" "$path"
+        install_dot_file "$f"
     done
     install_profile ~/.bash_profile "$path"
 }
@@ -64,11 +65,12 @@ install() {
 # Usage:
 # install - Install/Restore configs on a new machine
 # save - Save new dot file
-main() {
+install() {
     local config_path dots
 
-    config_path=${CKDOTS_CONFIG:-~/.ckdots-config}
+    config_path=${CKDOTS_CONFIG:-~/.ckdots}
 
+    # 0, Load dots from config repo
     # 1, Load from repo: ckdots-config
     # 2, Load from env: $CKDOTS_FILES
     # 3, Fallback to defaults
@@ -87,8 +89,115 @@ main() {
         echo "==> Falling back to default files: $dots"
     fi
 
-    backup "$dots" "$config_path/backup"
-    install "$dots" "$config_path"
+    install_backup "$dots" "$config_path/backup"
+    install_main "$dots" "$config_path"
+}
+
+usage() {
+    echo "
+Available commands:
+
+   install           Install on a new device
+   ls                List all saved dotfiles
+   add               Add new dotfile
+   rm                Remove a saved dotfile
+   help              Print this help
+"
+}
+
+# For \; vs +, see https://unix.stackexchange.com/a/12904/117184
+list() {
+    find "$CKDOTS_CONFIG/dots" -name ".*" -d 1 -exec basename {} \;
+}
+
+add_save_dot_file() {
+    declare dot="$1"
+
+    mv "$HOME/$dot" "$CKDOTS_CONFIG/dots"
+}
+
+add() {
+    declare dot="$1"
+
+    dot="$(basename "$dot")"
+    if [[ ! -e "$HOME/$dot" ]]; then
+        echo "Error: $HOME/$dot is not exist"
+        return
+    fi
+
+    add_save_dot_file "$dot"
+    install_dot_file "$CKDOTS_CONFIG/dots/$dot"
+}
+
+status_print_dots() {
+    declare dots="$1"
+
+    for dot in $dots; do
+        printf "\t%s\n" "$dot"
+    done
+}
+
+# Find all dotfiles under $1 and sorted lexically
+status_find_dots() {
+    declare path="$1"
+
+    local dots_found
+    local dots
+
+    dots_found="$(find "$path" -name ".*" -maxdepth 1)"
+    for dot in $dots_found; do
+        if [[ -d "$dot" ]]; then
+            dots+=("$(basename "$dot")/")
+        else
+            dots+=("$(basename "$dot")")
+        fi
+    done
+
+    echo "${dots[@]}"
+}
+
+status() {
+    local dots dots_user dots_tracked dots_untracked dots_ignored
+
+    # find -printf "%P" does work on macOS
+    dots_user="$(status_find_dots "$HOME")"
+    dots_tracked="$(status_find_dots "$CKDOTS_CONFIG/dots")"
+    dots_ignored="$(printf '%s\n' ${_DOTS_IGNORED[@]} | sort -f)"
+
+    # More set operation in shell, see http://www.catonmat.net/blog/set-operations-in-unix-shell/
+    dots_untracked=$(comm -i23 <(printf '%s\n' $dots_user) <(printf '%s\n' $dots_tracked))
+    dots_untracked=$(comm -i23 <(printf '%s\n' $dots_untracked) <(printf '%s\n' $dots_ignored))
+
+    echo 'Tracked dots:'
+    status_print_dots "$dots_tracked"
+    echo '
+Untracked dots:
+  (use "ckdots add <file>..." to include in what will be managed)
+'
+    status_print_dots "$dots_untracked"
+    echo '
+Ignored files:
+  (use "ckdots add <file>..." to include in what will be committed)
+'
+    status_print_dots "$dots_ignored"
+}
+
+main() {
+
+    if [[ -z "$1" ]] || [[ "$1" = help ]] || [[ "$1" = "-h" ]] || [[ "$1" = "--help" ]]; then
+        usage
+    elif [[ "$1" = install ]]; then
+        echo pass
+    elif [[ "$1" = ls ]] || [[ "$1" = list ]]; then
+        list
+    elif [[ "$1" = add ]] && [ $# -gt 1 ]; then
+        shift 1
+        add "$@"
+    elif [[ "$1" = status ]]; then
+        status
+    else
+        usage
+    fi
 }
 
 main "$@"

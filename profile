@@ -5,6 +5,8 @@
 # shellcheck source=/dev/null
 true
 
+export CKDOTS_ROOT
+export CKDOTS_CONFIG
 export PATH="$CKDOTS_ROOT/bin:$PATH"
 
 # Load configs
