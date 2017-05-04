@@ -170,7 +170,13 @@ status() {
     dots_untracked=( $(comm -i23 <(printf '%s\n' "${dots_untracked[@]}") <(printf '%s\n' "${dots_ignored[@]}")) )
 
     echo 'Tracked dots:'
-    status_print_dots "${dots_tracked[*]}"
+    for dot in ${dots_tracked[@]}; do
+	if [[ "$(readlink "$HOME/$dot")" != "$CKDOTS_CONFIG/dots/$dot" ]]; then
+        	printf "\tun-checkout: %s\n" "$dot"
+        else
+        	printf "\t%s\n" "$dot"
+	fi
+    done
     echo '
 Untracked dots:
   (use "ckdots add <file>..." to include in what will be managed)
