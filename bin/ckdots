@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# dot vs dotfile
+#  - dot is .vimrc
+#  - dotfile is path of .vimrc, i.e. ~/.vimrc
+
 _DEFAULT_FILES=""
 _SHELL_PROFILES=".bashrc .bash_profile"
 _DOTS_IGNORED=(.DS_Store)
@@ -46,10 +50,10 @@ EOF
 
 # Install one dotfile($1) to $HOME
 install_dot_file() {
-    local dot_file="$1"
+    local dot_file="$1" dest_dir="$2"
 
     echo "==> Installing dotfile $dot"
-    ln -sf "$dot_file" ~/
+    ln -sf "$dot_file" "$dest_dir/$(basename "$dot_file")"
 }
 
 install_main() {
@@ -102,6 +106,7 @@ Available commands:
    install           Install on a new device
    ls                List all saved dotfiles
    add               Add new dotfile
+   checkout          Checkout saved dotfiles to HOME
    help              Print this help
 "
 }
@@ -189,6 +194,43 @@ Ignored files:
     status_print_dots "${dots_ignored[*]}"
 }
 
+backup_dot_file() {
+    declare dot_file="$1" backup_dir="$2"
+    local dest_file
+
+    # Skiping if file un-exist
+    if [[ ! -e "$dot_file" ]]; then
+        echo "Skip backing up "$dot_file
+        return
+    fi
+
+    dest_file="$backup_dir/$(basename "$dot_file").$(date "+%Y%m%d-%H%M%S")"
+
+    mv "$dot_file" "$dest_file"
+}
+
+checkout_dot() {
+    declare dot="$1"
+
+    backup_dot_file "$HOME/$dot" "$CKDOTS_CONFIG/backup/"
+    install_dot_file "$CKDOTS_CONFIG/dots/$dot" "$HOME/"
+}
+
+checkout() {
+    declare dot="$1"
+
+    dot="$(basename "$dot")"
+
+    if [[ -z "$dot" ]]; then
+        local dots_tracked="$(status_find_dots "$CKDOTS_CONFIG/dots")"
+    for d in $dots_tracked; do
+        checkout_dot "$d"
+    done
+    else
+        checkout_dot "$dot"
+    fi
+}
+
 main() {
 
     if [[ -z "$1" ]] || [[ "$1" = help ]] || [[ "$1" = "-h" ]] || [[ "$1" = "--help" ]]; then
@@ -200,6 +242,9 @@ main() {
     elif [[ "$1" = add ]] && [ $# -gt 1 ]; then
         shift 1
         add "$@"
+    elif [[ "$1" = checkout ]]; then
+        shift 1
+        checkout "$@"
     elif [[ "$1" = status ]]; then
         status
     else
