@@ -138,11 +138,11 @@ status() {
 
     echo 'Tracked dots:'
     for dot in ${dots_tracked[@]}; do
-	if [[ "$(readlink "$HOME/$dot")" != "$CKDOTS_CONFIG/dots/$dot" ]]; then
-        	printf "\tun-checkout: %s\n" "$dot"
+        if [[ "$(readlink "$HOME/${dot/\//}")" != "$CKDOTS_CONFIG/dots/$dot" ]]; then
+            printf "\tun-checkout: %s\n" "$dot"
         else
-        	printf "\t%s\n" "$dot"
-	fi
+            printf "\t%s\n" "$dot"
+        fi
     done
     echo '
 Untracked dots:
