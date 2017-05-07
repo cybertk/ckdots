@@ -120,7 +120,8 @@ status_find_dots() {
         fi
     done
 
-    echo "${dots[@]}"
+    # Sort lexically
+    printf '%s\n' "${dots[@]}" | sort
 }
 
 status() {
@@ -129,11 +130,11 @@ status() {
     # find -printf "%P" does work on macOS
     dots_user=( "$(status_find_dots "$HOME")" )
     dots_tracked=( "$(status_find_dots "$CKDOTS_CONFIG/dots")" )
-    dots_ignored=( "$(printf '%s\n' "${_DOTS_IGNORED[@]}" | sort -f)" )
+    dots_ignored=( "$(printf '%s\n' "${_DOTS_IGNORED[@]}" | sort)" )
 
     # More set operation in shell, see http://www.catonmat.net/blog/set-operations-in-unix-shell/
-    dots_untracked=( $(comm -i23 <(printf '%s\n' "${dots_user[@]}") <(printf '%s\n' "${dots_tracked[@]}")) )
-    dots_untracked=( $(comm -i23 <(printf '%s\n' "${dots_untracked[@]}") <(printf '%s\n' "${dots_ignored[@]}")) )
+    dots_untracked=( $(comm -23 <(printf '%s\n' "${dots_user[@]}") <(printf '%s\n' "${dots_tracked[@]}")) )
+    dots_untracked=( $(comm -23 <(printf '%s\n' "${dots_untracked[@]}") <(printf '%s\n' "${dots_ignored[@]}")) )
 
     echo 'Tracked dots:'
     for dot in ${dots_tracked[@]}; do
