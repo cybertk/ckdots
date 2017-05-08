@@ -47,7 +47,7 @@ init() {
     local root_dir config_dir dots shells
 
     script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
-    config_dir="${CKDOTS_CONFIG:-~/ckdots}"
+    config_dir="${CKDOTS_CONFIG:-~/.ckdots}"
 
     if [[ ! -d "$config_dir" ]] && [[ ! -d "$(readlink "$config_dir")" ]]; then
         echo "==> Initialize config dir"
@@ -78,6 +78,27 @@ list() {
     find "$CKDOTS_CONFIG/dots" -name ".*" -d 1 -exec basename {} \;
 }
 
+list_dots_user() {
+    status_find_dots "$HOME"
+}
+
+list_dots_ignored() {
+    printf '%s\n' "${_DOTS_IGNORED[@]}" | sort
+}
+
+list_dots_tracked() {
+    status_find_dots "$CKDOTS_CONFIG/dots"
+}
+
+list_dots_untracked() {
+    local dots
+
+    dots=( $(comm -23 <(list_dots_user) <(list_dots_tracked)) )
+    dots=( $(comm -23 <(printf '%s\n' "${dots[@]}") <(list_dots_ignored)) )
+
+    printf '%s\n' "${dots[@]}"
+}
+
 add_save_dot_file() {
     declare dot="$1"
 
@@ -90,14 +111,7 @@ add() {
 
     # Add all user's dotfiles
     if [[ "$dot" = "--all" ]]; then
-        local dots_user=( "$(status_find_dots "$HOME")" )
-        local dots_tracked=( "$(status_find_dots "$CKDOTS_CONFIG/dots")" )
-        local dots_ignored=( "$(printf '%s\n' "${_DOTS_IGNORED[@]}" | sort)" )
-        local dots_untracked
-
-        dots_untracked=( $(comm -23 <(printf '%s\n' "${dots_user[@]}") <(printf '%s\n' "${dots_tracked[@]}")) )
-        dots_untracked=( $(comm -23 <(printf '%s\n' "${dots_untracked[@]}") <(printf '%s\n' "${dots_ignored[@]}")) )
-        for d in ${dots_untracked[@]}; do
+        for d in $(list_dots_untracked); do
             add_save_dot_file "$d"
             install_dot_file "$CKDOTS_CONFIG/dots/$d" "$HOME"
         done
@@ -144,19 +158,8 @@ status_find_dots() {
 }
 
 status() {
-    local dots dots_user dots_tracked dots_untracked dots_ignored
-
-    # find -printf "%P" does work on macOS
-    dots_user=( "$(status_find_dots "$HOME")" )
-    dots_tracked=( "$(status_find_dots "$CKDOTS_CONFIG/dots")" )
-    dots_ignored=( "$(printf '%s\n' "${_DOTS_IGNORED[@]}" | sort)" )
-
-    # More set operation in shell, see http://www.catonmat.net/blog/set-operations-in-unix-shell/
-    dots_untracked=( $(comm -23 <(printf '%s\n' "${dots_user[@]}") <(printf '%s\n' "${dots_tracked[@]}")) )
-    dots_untracked=( $(comm -23 <(printf '%s\n' "${dots_untracked[@]}") <(printf '%s\n' "${dots_ignored[@]}")) )
-
     echo 'Tracked dots:'
-    for dot in ${dots_tracked[@]}; do
+    for dot in $(list_dots_tracked); do
         if [[ "$(readlink "$HOME/${dot/\//}")" != "$CKDOTS_CONFIG/dots/$dot" ]]; then
             printf "\tun-checkout: %s\n" "$dot"
         else
@@ -167,12 +170,12 @@ status() {
 Untracked dots:
   (use "ckdots add <file>..." to include in what will be managed)
 '
-    status_print_dots "${dots_untracked[*]}"
+    status_print_dots "$(list_dots_untracked)"
     echo '
 Ignored files:
   (use "ckdots add <file>..." to include in what will be committed)
 '
-    status_print_dots "${dots_ignored[*]}"
+    status_print_dots "$(list_dots_ignored)"
 }
 
 backup_dot_file() {
