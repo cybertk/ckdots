@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 
+set -e
 # dot vs dotfile
 #  - dot is .vimrc
 #  - dotfile is path of .vimrc, i.e. ~/.vimrc
 
 _DEFAULT_FILES=""
-_DOTS_IGNORED=(.DS_Store)
+_DOTS_IGNORED=(.DS_Store .ckdots/)
 
 install_profile() {
     declare profile="$1" root_dir="$2" config_dir="$3"
@@ -28,7 +29,7 @@ EOF
 install_dot_file() {
     local dot_file="$1" dest_dir="$2"
 
-    echo "==> Installing dotfile $dot"
+    echo "==> Installing dotfile $dot_file"
     ln -sf "$dot_file" "$dest_dir/$(basename "$dot_file")"
 }
 
@@ -46,7 +47,7 @@ init() {
     local root_dir config_dir dots shells
 
     script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
-    config_dir="${CKDOTS_CONFIG:-~/.ckdots}"
+    config_dir="${CKDOTS_CONFIG:-~/ckdots}"
 
     if [[ ! -d "$config_dir" ]] && [[ ! -d "$(readlink "$config_dir")" ]]; then
         echo "==> Initialize config dir"
@@ -80,12 +81,30 @@ list() {
 add_save_dot_file() {
     declare dot="$1"
 
+    echo "==> Saving $dot"
     mv "$HOME/$dot" "$CKDOTS_CONFIG/dots"
 }
 
 add() {
     declare dot="$1"
 
+    # Add all user's dotfiles
+    if [[ "$dot" = "--all" ]]; then
+        local dots_user=( "$(status_find_dots "$HOME")" )
+        local dots_tracked=( "$(status_find_dots "$CKDOTS_CONFIG/dots")" )
+        local dots_ignored=( "$(printf '%s\n' "${_DOTS_IGNORED[@]}" | sort)" )
+        local dots_untracked
+
+        dots_untracked=( $(comm -23 <(printf '%s\n' "${dots_user[@]}") <(printf '%s\n' "${dots_tracked[@]}")) )
+        dots_untracked=( $(comm -23 <(printf '%s\n' "${dots_untracked[@]}") <(printf '%s\n' "${dots_ignored[@]}")) )
+        for d in ${dots_untracked[@]}; do
+            add_save_dot_file "$d"
+            install_dot_file "$CKDOTS_CONFIG/dots/$d" "$HOME"
+        done
+        return
+    fi
+
+    echo hi
     dot="$(basename "$dot")"
     if [[ ! -e "$HOME/$dot" ]]; then
         echo "Error: $HOME/$dot is not exist"
@@ -93,7 +112,7 @@ add() {
     fi
 
     add_save_dot_file "$dot"
-    install_dot_file "$CKDOTS_CONFIG/dots/$dot"
+    install_dot_file "$CKDOTS_CONFIG/dots/$dot" "$HOME"
 }
 
 status_print_dots() {
