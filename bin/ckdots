@@ -142,7 +142,7 @@ status_find_dots() {
     local dots_found
     local dots
 
-    dots_found="$(find "$path" -name ".*" -maxdepth 1)"
+    dots_found="$(find "$path" -maxdepth 1 -name ".*")"
     for dot in $dots_found; do
         if [[ -d "$dot" ]]; then
             dots+=("$(basename "$dot")/")
