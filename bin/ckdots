@@ -47,7 +47,7 @@ init() {
     local root_dir config_dir dots shells
 
     script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
-    config_dir="${CKDOTS_CONFIG:-~/.ckdots}"
+    config_dir="${CKDOTS_CONFIG:-$HOME/.ckdots}"
 
     if [[ ! -d "$config_dir" ]] && [[ ! -d "$(readlink "$config_dir")" ]]; then
         echo "==> Initialize config dir"
