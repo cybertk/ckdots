@@ -104,7 +104,8 @@ end
 
 task :lint do
     shs = Dir.glob("**/*.sh")
-    shs << "bashrc"
+    shs << "profile"
+    shs << "bin/largest"
 
     sh "shellcheck #{shs.join(' ')}"
 end
