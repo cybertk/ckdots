@@ -1,31 +1,42 @@
-# ck-dots
+# ckdots
 
 > Manage your dotfiles across all your devices
 
-[![CI Status](http://img.shields.io/travis/cybertk/ck-dots.svg?style=flat)](https://travis-ci.org/cybertk/ck-dots)
+[![CI Status](http://img.shields.io/travis/cybertk/ck-dots.svg?style=flat)](https://travis-ci.org/cybertk/ckdots)
+
+**ckdots** manage your dotfiles by move them to a central config dir, you can simply sharing this config dir across all you devices
 
 ## Getting Started
 
 Install from source
 
 ```
-git clone https://github.com/cybertk/ck-dots.git
-cd ck-dots
-./install
+git clone https://github.com/cybertk/ckdots.git
+cd ckdots
+./bin/ckdots init
+```
+
+To save dotfile, i.e. `.gemrc`
+
+```
+ckdots add .gemrc
+```
+
+Show current status of all your dotfiles
+
+```
+ckdots status
 ```
 
 ## Command Line Usages
 
-- restore, restore previous saved dotfiles(from config repo) on a new machine
-- install, let **ck-dots** manage dotfiles on a new device
-- uninstall, uninstall
-- ls, list all dotfiles **ck-dots** managed
-- add, save specifed dotfile into config repo, let **ck-dots** manage it
-- rm, remove specifed dotfile from config repo
-- upgrade, upgrade to latest version
+- init, install ckdots on a new machine
+- add, save specifed dotfile
+- checkout, restore previous saved dotfile
+- ls, list all saved dotfile
+- status, show current status of dotfiles
+- help, print this help
 
-
-## Plugins
 
 ## License
 
