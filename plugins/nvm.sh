@@ -1,9 +1,9 @@
-# Source nvm env.
-
 export NVM_DIR=~/.nvm
 
-[[ -s "$(brew --prefix nvm)/nvm.sh" ]] && source "$(brew --prefix nvm)/nvm.sh"
+[[ -s "$NVM_DIR/nvm.sh" ]] && . "$NVM_DIR/nvm.sh"
 
-# See https://npm.taobao.org/
-export NVM_NODEJS_ORG_MIRROR=http://npm.taobao.org/mirrors/node
-export NVM_IOJS_ORG_MIRROR=http://npm.taobao.org/mirrors/iojs
+if [[ -n "$CONFIG_NVM_MIRROR" ]]
+then
+    export NVM_NODEJS_ORG_MIRROR="$CONFIG_NVM_MIRROR/node"
+    export NVM_IOJS_ORG_MIRROR="$CONFIG_NVM_MIRROR/iojs"
+fi
