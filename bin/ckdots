@@ -158,7 +158,7 @@ status_find_dots() {
 status() {
     echo 'Tracked dots:'
     for dot in $(list_dots_tracked); do
-        if [[ "$(readlink "$HOME/${dot/\//}")" != "$CKDOTS_CONFIG/dots/$dot" ]]; then
+        if [[ "$(readlink "$HOME/${dot/\//}")" != "$CKDOTS_CONFIG/dots/${dot/\//}" ]]; then
             printf "\tun-checkout: %s\n" "$dot"
         else
             printf "\t%s\n" "$dot"
