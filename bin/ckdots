@@ -38,8 +38,6 @@ init_config_dir() {
 
     mkdir -p "$config_dir"
 
-    mkdir "$config_dir/dots"
-    mkdir "$config_dir/backup"
     cp -r "$template_dir" "$config_dir"
 }
 

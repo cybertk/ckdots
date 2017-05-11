@@ -15,6 +15,7 @@ export PATH="$CKDOTS_ROOT/bin:$PATH"
 
 # Invoke plugins
 for sh in ${CKDOTS_ROOT}/plugins/*.*sh; do . "$sh"; done
+for sh in ${CKDOTS_CONFIG}/plugins/*.*sh; do . "$sh"; done
 
 # Load custom profile
 [[ -e "$CONFIG_PROFILE" ]] && . "$CONFIG_PROFILE"
