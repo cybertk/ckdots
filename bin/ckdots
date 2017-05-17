@@ -101,6 +101,7 @@ add_save_dot_file() {
     declare dot="$1"
 
     echo "==> Saving $dot"
+    [[ -d "$CKDOTS_CONFIG/dots/$dot" ]] && rm -rf "$CKDOTS_CONFIG/dots/$dot"
     mv "$HOME/$dot" "$CKDOTS_CONFIG/dots"
 }
 
@@ -116,7 +117,6 @@ add() {
         return
     fi
 
-    echo hi
     dot="$(basename "$dot")"
     if [[ ! -e "$HOME/$dot" ]]; then
         echo "Error: $HOME/$dot is not exist"
