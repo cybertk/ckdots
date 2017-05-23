@@ -52,6 +52,9 @@ init() {
         init_config_dir "$config_dir" "$script_dir/templates/config/"
     fi
 
+    # Ensure backup dir exist
+    mkdir -p "$config_dir/backup/"
+
     shells=".bash_profile .bashrc"
     for shell in $shells; do
         backup_dot_file "$HOME/$shell" "$config_dir/backup/"
