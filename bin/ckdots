@@ -60,6 +60,9 @@ init() {
         backup_dot_file "$HOME/$shell" "$config_dir/backup/"
         install_profile "$HOME/$shell" "$script_dir" "$config_dir"
     done
+
+    # Trigger hook of when_init
+    [[ -x $CKDOTS_CONFIG/hooks.sh ]] && $CKDOTS_CONFIG/hooks.sh init
 }
 
 usage() {
