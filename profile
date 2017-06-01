@@ -5,6 +5,9 @@
 # shellcheck source=/dev/null
 true
 
+# Do NOT activate ckdots for non-login shells
+shopt -q login_shell || return
+
 export CKDOTS_ROOT
 export CKDOTS_CONFIG
 export PATH="$CKDOTS_ROOT/bin:$PATH"
