@@ -1,13 +1,18 @@
 # Turn on/off http proxy
 # Usage:
 #   Turn on proxy
-#       $ proxy on
+#       $ proxy on [index]
 #   Turn off proxy
 #       $ proxy off
 #   Show current proxy status
 #       $ proxy
+#
+# Config:
+#   CONFIG_PROXY_URL, single proxy url string
+#   CONFIG_PROXY_URLS, proxy urls array, switching with `proxy on <index>`
+
 function proxy() {
-    declare opt="$1"
+    declare opt="$1" index="$2"
 
     if [[ "$opt" = off ]]; then
         # Turn off proxy
@@ -17,9 +22,17 @@ function proxy() {
 
         [[ -x $CKDOTS_HOOKS ]] && . $CKDOTS_HOOKS proxy_off
     elif [[ "$opt" = on ]]; then
+        local proxy_url
+
+        if [[ -n "$CONFIG_PROXY_URL" ]]; then
+            proxy_url=$CONFIG_PROXY_URL
+        else
+            proxy_url=${CONFIG_PROXY_URLS[${index:-0}]}
+        fi
+
         # Turn on proxy
-        export https_proxy="$CONFIG_PROXY_URL"
-        export http_proxy="$CONFIG_PROXY_URL"
+        export https_proxy="$proxy_url"
+        export http_proxy="$proxy_url"
         # Support inline script in $CONFIG_PROXY_BYPASS. e.g. CONFIG_PROXY_BYPASS='localhost,$(docker-machine ip)'
         export no_proxy="$(eval "echo $CONFIG_PROXY_BYPASS")"
 
