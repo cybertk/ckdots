@@ -41,8 +41,18 @@ init_config_dir() {
     cp -r "$template_dir" "$config_dir"
 }
 
+init_config_from_repo() {
+    declare repo="$1"
+
+    git clone "$repo" ~/.ckdots
+}
+
 init() {
+    declare repo="$1"
+
     local root_dir config_dir dots shells
+
+    [[ -n "$repo" ]] && init_config_from_repo "$repo"
 
     script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
     config_dir="${CKDOTS_CONFIG:-$HOME/.ckdots}"
@@ -224,7 +234,7 @@ main() {
     if [[ -z "$1" ]] || [[ "$1" = help ]] || [[ "$1" = "-h" ]] || [[ "$1" = "--help" ]]; then
         usage
     elif [[ "$1" = init ]]; then
-        init
+        init "$@"
     elif [[ "$1" = ls ]] || [[ "$1" = list ]]; then
         list
     elif [[ "$1" = add ]] && [ $# -gt 1 ]; then
