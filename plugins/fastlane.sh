@@ -1,0 +1,3 @@
+# Fastlane support
+
+[[ -n $CONFIG_FASTLANE_USER ]] && export FASTLANE_USER=$CONFIG_FASTLANE_USER
