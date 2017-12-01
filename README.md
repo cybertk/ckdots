@@ -8,12 +8,13 @@
 
 ## Getting Started
 
-Install from source
+### Install On First Device
+
+If this is the first time you use **ckdots**, just invoke the following command to install it,
 
 ```
 git clone https://github.com/cybertk/ckdots.git
-cd ckdots
-./bin/ckdots init
+./ckdots/bin/ckdots init
 ```
 
 To save dotfile, i.e. `.gemrc`
@@ -26,6 +27,39 @@ Show current status of all your dotfiles
 
 ```
 ckdots status
+```
+
+### Restore From Existing Config
+
+If you already have a **config** dir(defauts at *~/.ckdots*), and want to restore the saved config on another machine.
+
+First, download your **config** dir into *~/.ckdots*, i.e. if your dir is tracked under git
+
+```shell
+git clone https://github.com/example/ckdots-config.git ~/.ckdots
+```
+
+Then initialize the with
+
+```
+git clone https://github.com/cybertk/ckdots.git
+./ckdots/bin/ckdots init
+```
+
+Now you all you configs will be installed on your new device.
+
+## Sync Your CLI Config Across Devices
+
+**ckdots** will save all your config into *~/.ckdots* dir, you can simply put this dir in your Cloud Disk or track it with git.
+
+## Use Customized Config Dir
+
+**config** dir is controlled with environment variable `CKDOTS_CONFIG`. 
+
+For example, when you restore the **ckdots** on a new device, and you exsiting config is saved in Dropbox at path */Dropbox/cli.config/*. Then restore with
+
+```shell
+CKDOTS_CONFIG=/Dropbox/cli.config/ ./path/to/ckdots/bin/ckdots init
 ```
 
 ## Command Line Usages
