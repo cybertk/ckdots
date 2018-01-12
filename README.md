@@ -71,6 +71,31 @@ CKDOTS_CONFIG=/Dropbox/cli.config/ ./path/to/ckdots/bin/ckdots init
 - status, show current status of dotfiles
 - help, print this help
 
+## Using with Docker
+
+Create a dedicated home volume
+
+```bash
+docker volume create home
+```
+
+Then install the **ckdots** into home volume with
+
+```
+docker run -it --rm -vhome:/root quanlong/ckdots <github_username> <github_password_or_token> <github_repo> [dots]
+```
+
+i.e. install *.vim* and *.vimrc/* with
+
+```bash
+docker run -it --rm -vhome:/root quanlong/ckdots cybertk secret cybertk/ckdots-config .vim/ .vimrc
+```
+
+Then enjoy with your dots environment by attching the home volume
+
+```
+docker run -it --rm -vckdots:/root ubuntu:14.04 /bin/bash --login
+```
 
 ## License
 
