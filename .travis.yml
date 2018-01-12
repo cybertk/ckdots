@@ -1,6 +1,10 @@
-ghc: 7.4
-install:
-  - cabal install shellcheck
+language: bash
+addons:
+  apt:
+    sources:
+    - debian-sid    # Grab ShellCheck from the Debian repo
+    packages:
+    - shellcheck
 script:
   - rake lint
 notifications:
