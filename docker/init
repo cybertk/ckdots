@@ -14,7 +14,7 @@ main() {
     git clone "https://github.com/cybertk/ckdots" /root/.ckdots
 
     echo "==> Cloning config"
-    git clone "https://$1:$2@github.com/$github_repo" /root/.ckdots/config
+    git clone "https://$username:$password@github.com/$github_repo" /root/.ckdots/config
 
     echo "==> Installing ckdots"
     CKDOTS_CONFIG=/root/.ckdots/config /root/.ckdots/bin/ckdots init
