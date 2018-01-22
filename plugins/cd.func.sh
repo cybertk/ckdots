@@ -38,3 +38,5 @@ function c() {
         echo -en "\033[0m"
     fi
 }
+
+export CDPATH=$CONFIG_CDPATH
