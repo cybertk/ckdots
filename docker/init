@@ -2,6 +2,9 @@
 
 # TODO: replace with getopt
 
+# Exit if any errors
+set -e
+
 main() {
     username="$1"
     password="$2"
