@@ -1,0 +1,6 @@
+wd=$(mktemp -d)
+
+cd $wd
+curl -LO https://github.com/git-lfs/git-lfs/releases/download/v2.3.4/git-lfs-linux-amd64-2.3.4.tar.gz
+tar xf git-lfs-*.tar.gz
+cp git-lfs-*/git-lfs $CKDOTS_CONFIG/bin/
