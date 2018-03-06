@@ -1,0 +1,5 @@
+#!/bin/sh
+
+docker run -it --rm -vhome:/root \
+    quanlong/ckdots cybertk "$GITHUB_TOKEN" cybertk/ckdots-config \
+        .vim .vimrc
