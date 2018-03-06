@@ -1,0 +1,12 @@
+# Install unison v2.48.4. See https://github.com/bcpierce00/unison/releases/tag/2.48.4
+#
+# For Windows prebuilt binaries, see https://www.irif.fr/~vouillon/unison/
+
+wd=$(mktemp -d)
+
+cd $wd
+curl -LO https://github.com/bcpierce00/unison/releases/download/2.48.4/unison-2.48.4-linux-x86_64-text-static.tar.gz
+tar xf unison-*.tar.gz
+cp unison-2.48.4-linux-x86_64-text-static $CKDOTS_CONFIG/bin/unison
+
+unison -version
