@@ -1,1 +1,6 @@
-apt-get install pinentry-curses keychain
+#!/bin/sh
+
+# Install Funtoo Keychain
+
+# pinentry-curses is used for asking GPG passphrase
+apt-get install -y pinentry-curses keychain
