@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# See https://github.com/koalaman/shellcheck#installing
+
+sudo curl -L https://storage.googleapis.com/shellcheck/shellcheck-stable.linux.x86_64.tar.xz -o /usr/local/bin/shellcheck
+sudo chmod a+rx /usr/local/bin/shellcheck
