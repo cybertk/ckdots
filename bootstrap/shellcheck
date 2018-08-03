@@ -2,5 +2,14 @@
 
 # See https://github.com/koalaman/shellcheck#installing
 
-sudo curl -L https://storage.googleapis.com/shellcheck/shellcheck-stable.linux.x86_64.tar.xz -o /usr/local/bin/shellcheck
+tmp=$(mktemp -d --tmpdir)
+
+cd "$tmp"
+curl -LO https://storage.googleapis.com/shellcheck/shellcheck-stable.linux.x86_64.tar.xz
+tar xf shellcheck-stable.linux.x86_64.tar.xz
+sudo mv -f shellcheck-stable/shellcheck /usr/local/bin/
 sudo chmod a+rx /usr/local/bin/shellcheck
+
+shellcheck --version
+
+rm -fr "$tmp"
