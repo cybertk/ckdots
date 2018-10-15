@@ -1,0 +1,13 @@
+set -x
+
+wd=$(mktemp -d)
+
+version=v2.17.0
+
+cd $wd
+curl -LO https://github.com/direnv/direnv/releases/download/$version/direnv.linux-amd64
+cp direnv.* /usr/local/bin/direnv
+chmod +x /usr/local/bin/direnv
+
+echo 'Additonal step required, add the followling commands into shell profile'
+echo 'eval "$(direnv hook bash)"'
