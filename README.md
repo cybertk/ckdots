@@ -82,13 +82,16 @@ docker volume create home
 Then install the **ckdots** into home volume with
 
 ```
-docker run -it --rm -vhome:/root quanlong/ckdots <github_username> <github_password_or_token> <github_repo> [dots]
+export GITHUB_UESRNAME=xxx
+export GITHUB_TOKEN=xxx
+export CKCONFIG_REPO=$GITHUB_UESRNAME/ckdots-config
+docker run -it --rm -vhome:/root quanlong/ckdots $GITHUB_USERNAME $GITHUB_TOKEN $CKCONFIG_REPO [dots]
 ```
 
 i.e. install *.vim* and *.vimrc/* with
 
 ```bash
-docker run -it --rm -vhome:/root quanlong/ckdots cybertk secret cybertk/ckdots-config .vim/ .vimrc
+docker run -it --rm -vhome:/root quanlong/ckdots cybertk $GITHUB_TOKEN cybertk/ckdots-config .vim/ .vimrc
 ```
 
 Then enjoy with your dots environment by attching the home volume
