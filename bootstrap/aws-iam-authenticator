@@ -1,0 +1,3 @@
+wget https://github.com/kubernetes-sigs/aws-iam-authenticator/releases/download/v0.3.0/heptio-authenticator-aws_0.3.0_linux_amd64 -O /tmp/aws-iam-authenticator
+chmod +x /tmp/aws-iam-authenticator
+sudo cp /tmp/aws-iam-authenticator /usr/local/bin/
