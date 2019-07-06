@@ -1,0 +1,13 @@
+
+VERSION=v2.11.0
+
+cd /tmp
+curl -OL https://storage.googleapis.com/kubernetes-helm/helm-$VERSION-linux-amd64.tar.gz
+tar xf helm-$VERSION-linux-amd64.tar.gz
+
+chmod a+x linux-amd64/helm
+chmod a+x linux-amd64/tiller
+
+sudo cp linux-amd64/helm /usr/local/bin/
+sudo cp linux-amd64/tiller /usr/local/bin/
+
