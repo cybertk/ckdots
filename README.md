@@ -4,74 +4,64 @@
 
 [![CI Status](http://img.shields.io/travis/cybertk/ck-dots.svg?style=flat)](https://travis-ci.org/cybertk/ckdots)
 
-**ckdots** manage your dotfiles by move them to a central config dir, you can simply sharing this config dir across all you devices
+**ckdots** manages your dotfiles by moving them to a designated **config directory**, then you can simply share this directory across all your devices with your familiar tools, such as OneDrive, Busybox, iCloud Drive, or a git repo.
 
-## Getting Started
+## Install
 
-### Install On First Device
+To install the **ckdots** and save all your dotfiles at */Dropbox/cli.config/*:
 
-If this is the first time you use **ckdots**, just invoke the following command to install it,
-
-```
+```shell
 git clone https://github.com/cybertk/ckdots.git
-./ckdots/bin/ckdots init
+CKDOTS_CONFIG=/Dropbox/cli.config/ ./ckdots/bin/ckdots init
 ```
 
-To save dotfile, i.e. `.gemrc`
+Then you can sync the **config directory** */Dropbox/cli.config/* on all your devices, and install **ckdots** on them.
 
-```
+## Getting started
+
+### Move the dotfile to your shared config directory
+
+**ckdots** moves the dotfiles to a designated **config directory**(defaults at *~/.ckdots*) and creates a softlink at
+the original place. To save a dotfile, for example, *.gemrc*:
+
+```shell
 ckdots add .gemrc
 ```
 
-Show current status of all your dotfiles
-
-```
-ckdots status
-```
-
-### Restore From Existing Config
-
-If you already have a **config** dir(defauts at *~/.ckdots*), and want to restore the saved config on another machine.
-
-First, download your **config** dir into *~/.ckdots*, i.e. if your dir is tracked under git
+### Show current status of all your dotfiles
 
 ```shell
-git clone https://github.com/example/ckdots-config.git ~/.ckdots
+$ ckdots status
+Tracked dots:
+	un-checkout: .cocos/
+	.docker/
+	un-checkout: .fastlane/
+	un-checkout: .gdbinit
+	un-checkout: .gemrc
+	.gitconfig
+	.gnupg/
+	un-checkout: .greenkeeperrc
+	un-checkout: .hyper.js
+	.kube/
+
+Untracked dots:
+  (use "ckdots add <file>..." to include in what will be managed)
+
+	.Trash/
+	.anyconnect
+	.bash_sessions/
 ```
 
-Then initialize the with
-
-```
-git clone https://github.com/cybertk/ckdots.git
-./ckdots/bin/ckdots init
-```
-
-Now you all you configs will be installed on your new device.
-
-## Sync Your CLI Config Across Devices
-
-**ckdots** will save all your config into *~/.ckdots* dir, you can simply put this dir in your Cloud Disk or track it with git.
-
-## Use Customized Config Dir
-
-**config** dir is controlled with environment variable `CKDOTS_CONFIG`. 
-
-For example, when you restore the **ckdots** on a new device, and you exsiting config is saved in Dropbox at path */Dropbox/cli.config/*. Then restore with
-
-```shell
-CKDOTS_CONFIG=/Dropbox/cli.config/ ./path/to/ckdots/bin/ckdots init
-```
-
-## Command Line Usages
+## Command-line Usages
 
 - init, install ckdots on a new machine
-- add, save specifed dotfile
-- checkout, restore previous saved dotfile
+- add, save specified dotfile
+- checkout, restore previously saved dotfile
 - ls, list all saved dotfile
-- status, show current status of dotfiles
+- status, show the current status of dotfiles
 - help, print this help
 
-## Using with Docker
+## Use in Docker
 
 Create a dedicated home volume
 
@@ -94,7 +84,7 @@ i.e. install *.vim* and *.vimrc/* with
 docker run -it --rm -vhome:/root quanlong/ckdots cybertk $GITHUB_TOKEN cybertk/ckdots-config .vim/ .vimrc
 ```
 
-Then enjoy with your dots environment by attching the home volume
+Then enjoy with your dots environment by attaching the home volume
 
 ```
 docker run -it --rm -vckdots:/root ubuntu:14.04 /bin/bash --login
@@ -102,4 +92,4 @@ docker run -it --rm -vckdots:/root ubuntu:14.04 /bin/bash --login
 
 ## License
 
-ck-dots is available under the MIT license. See the LICENSE file for more info.
+**ckdots** is available under the MIT license. See the LICENSE file for more info.
