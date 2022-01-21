@@ -1,4 +1,4 @@
-FROM alpine:3.7
+FROM alpine:3.14.3
 
 LABEL maintainer "Quanlong <quanlong.he@gmail.com>"
 
