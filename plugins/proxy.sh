@@ -27,7 +27,7 @@ function proxy() {
         if [[ -n "$CONFIG_PROXY_URL" ]]; then
             proxy_url=$CONFIG_PROXY_URL
         else
-            proxy_url=${CONFIG_PROXY_URLS[${index:-0}]}
+            proxy_url=${CONFIG_PROXY_URLS[@]:${index:-0}:1}
         fi
 
         # Turn on proxy
