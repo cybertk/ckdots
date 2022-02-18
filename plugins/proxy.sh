@@ -12,7 +12,7 @@
 #   CONFIG_PROXY_URLS, proxy urls array, switching with `proxy on <index>`
 
 function proxy() {
-    declare opt="$1" index="$2"
+    declare opt="$1" index="${2:-0}"
 
     if [[ "$opt" = off ]]; then
         # Turn off proxy
@@ -27,7 +27,7 @@ function proxy() {
         if [[ -n "$CONFIG_PROXY_URL" ]]; then
             proxy_url=$CONFIG_PROXY_URL
         else
-            proxy_url=${CONFIG_PROXY_URLS[@]:${index:-0}:1}
+            proxy_url=${CONFIG_PROXY_URLS[@]:$index:1}
         fi
 
         # Turn on proxy
