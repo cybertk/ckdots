@@ -39,4 +39,9 @@ function c() {
     fi
 }
 
-export CDPATH=$CONFIG_CDPATH
+if [[ -n $ZSH_VERSION ]]; then
+    setopt auto_cd
+    cdpath=(`echo $CONFIG_CDPATH | sed -e "s/:/ /g;s#\~#$HOME#g;"`)
+else # defaults to bash
+    export CDPATH=$CONFIG_CDPATH
+fi
